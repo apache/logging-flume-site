@@ -9,7 +9,7 @@ Publishing the Apache Flume web site requires:
 5. Open your browser to point to *local directory*/target/site/index.html and review the site.
 6. When the changes look ok run `mvn resources:copy-resources@install`.
 7. Perform `git add` on the affected files and `git commit`.
-8. Perform git push.
+8. Perform `git push`.
 9. After a few minutes review https://flume.staged.apache.org and make sure the appropriate changes are present.
 10. Once the site has been approved checkout the asf-site branch. 
 11. Perform `git rebase asf-staging` followed by `git push`.
