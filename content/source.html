@@ -1,0 +1,188 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Source Repository &mdash; Apache Flume</title>
+    
+    <link rel="stylesheet" href="_static/flume.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Apache Flume" href="index.html" />
+    <link rel="next" title="Apache License" href="license.html" />
+    <link rel="prev" title="Team" href="team.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <table width="100%" border="0">
+    <tr>
+      <td width="10%">
+        <div class="logo">
+          <a href="index.html">
+            <img class="logo" src="_static/flume-logo.png" alt="Logo"/>
+          </a>
+        </div>
+      </td>
+      <td width="2%">
+          <span class="trademark">&trade;</span>
+      </td>
+      <td width="68%" align="center" class="pageTitle">Apache Flume<sup><span class="trademark">&trade;</span></sup>
+      </td>
+      <td width="20%">
+          <a href="http://www.apache.org">
+            <img src="_static/feather-small.png" alt="Apache Software Foundation" height="70"/>
+          </a>
+      </td>
+    </tr>
+  </table>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="source-repository">
+<h1>Source Repository<a class="headerlink" href="#source-repository" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Overview</p>
+<p>This project uses <a class="reference external" href="http://git-scm.com/">Git</a> to manage its source code. Instructions on
+Git use can be found in the <a class="reference external" href="http://git-scm.com/documentation/">Git documentation</a>.</p>
+<p class="rubric">Web Access</p>
+<p>The following is a link to the online source repository.</p>
+<div class="highlight-none"><div class="highlight"><pre>
+<a href="https://git-wip-us.apache.org/repos/asf?p=flume.git;a=tree;h=refs/heads/trunk;hb=trunk">https://git-wip-us.apache.org/repos/asf?p=flume.git;a=tree;h=refs/heads/trunk;hb=trunk</a>
+</pre></div></div><p class="rubric">Anonymous Access</p>
+<p>Flume maintains an active release branch along with trunk. The release branch represents the list of commits that will go into the next release.
+All commits that go into trunk will also have to be committed using git cherry-pick and pushed to the current release branch.
+The current release branch is flume-1.4.</p>
+<p>The source can be checked out anonymously from git with this command::</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git clone http://git-wip-us.apache.org/repos/asf/flume.git flume
+</pre></div>
+</div>
+<p class="rubric">Developer Access</p>
+<p>Everyone can access the Git repository via HTTP, but Committers must clone the git repository via HTTPS.:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git clone https://git-wip-us.apache.org/repos/asf/flume.git flume
+</pre></div>
+</div>
+<p>Committers should first commit the patch to trunk on your local repo:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git pull
+$ git commit -m &quot;A message&quot;
+$ git log
+</pre></div>
+</div>
+<p>Copy the commit hash of the commit you just made. Then:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git checkout flume-1.4 (or the current release branch)
+$ git pull
+$ git cherry-pick &lt;commit hash of the commit you made&gt; (This should get committed immediately).
+</pre></div>
+</div>
+<p>Now push to both trunk and the release branch:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git push -u origin trunk
+$ git push -u origin flume-1.4
+</pre></div>
+</div>
+<p>For more details, please read: <a class="reference external" href="https://git-wip-us.apache.org/">Git at Apache</a>. Please read the
+<a class="reference external" href="https://git-wip-us.apache.org/docs/common-errors.html">Common Errors page</a> if you face any problems.</p>
+<p>The committer should make sure the commits are pushed to both branches. Please make sure all commits to the release branch are fast forward commits
+and there are no merge commits on the release branch.</p>
+<p>This process requires a little more work, but this guarantees that our release tags will not have accidental and local commits in its history,
+as we can force push to the release branches to remove these from history. Ideally we should try to keep the history on release branches linear,
+but if at some point we decide to start using feature branches, we might end up having merge commits on these branches too, but that is expected
+and required - since that would represent the list of commits for that feature.</p>
+<p>When a release is finalized, the current release branch will be frozen by the release manager for the release, and a new release branch will be
+branched off the current release branch. The new branch will represent the next release and all commits not meant for the current release must
+go to the new branch once the current branch is frozen. The release manager then pushes release related commits to the current branch.</p>
+<p>For example, if the next release is flume-1.4.0, all commits should go to trunk and flume-1.4.
+When the rolling release canidate, the release manager will create a new branch, say flume-1.5 from the latest commit of
+flume-1.4. All further non-release related commits should go to trunk and flume-1.5 (unless the release manager thinks otherwise - in which case it can
+go to flume-1.4 and flume-1.5).</p>
+<p>Please note that the main development branch is <strong>trunk</strong>, not master.</p>
+<p class="rubric">Access From Behind a Firewall</p>
+<p>For those users who are stuck behind a corporate firewall which is blocking HTTP access to the Subversion repository,
+you can try to access it via the developer connection:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git clone https://git-wip-us.apache.org/repos/asf/flume.git flume
+</pre></div>
+</div>
+<p class="rubric">Access Through a Proxy</p>
+<p>The Subversion client can go through a proxy, if you configure it to do so. To configure git to use a proxy:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git config http.proxy address:port
+</pre></div>
+</div>
+<p>Then do a git clone as usual:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ git clone http://git-wip-us.apache.org/repos/asf/flume.git flume
+</pre></div>
+</div>
+<p class="rubric">SVN Access</p>
+<p>If you prefer to use svn and not git, please use the <a class="reference external" href="https://github.com/apache/flume">Github read-only mirror</a> to checkout
+the sources. Please read <a class="reference external" href="https://github.com/blog/626-announcing-svn-support">this</a> and <a class="reference external" href="https://github.com/blog/626-announcing-svn-support">this</a>
+for details on how to use svn with github. Please note that the github mirror is likely to be several hours behind the Apache Flume git repo.</p>
+<p><strong>Note 1:</strong> The (erstwhile) Apache Flume <a class="reference external" href="http://svn.apache.org/repos/asf/flume/">SVN repository</a> is no longer updated and should not be used to checkout
+the source code.</p>
+<p><strong>Note 2:</strong> Committers must use the git-wip-us repo to commit. SVN can no longer be used to commit.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3><a href="index.html">Apache Flume</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getinvolved.html">How to Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases/index.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mailinglists.html">Mailing lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="team.html">Team</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Source Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Apache License</a></li>
+</ul>
+
+<h3>Resources</h3>
+
+<ul class="this-page-menu">
+    <li><a href="https://issues.apache.org/jira/browse/FLUME">Flume Issue Tracking (Jira)</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME">Flume Wiki</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME/Getting+Started">Getting Started Guide</a></li>
+    <li><a href="https://builds.apache.org/job/flume-trunk/">Jenkins Continuous Integration Server</a></li>
+    <li><a href="https://builds.apache.org/analysis/">Sonar Code Quality Reports</a></li>
+</ul>
+
+<h3>Apache</h3>
+
+<ul class="this-page-menu">
+    <li><a href="http://www.apache.org">Home</a></li>
+    <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+    <li><a href="http://www.apache.org/licenses">Licenses</a> </li>
+    <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+    <li><a href="http://www.apachecon.com">Conferences</a></li>
+    <li><a href="http://www.apache.org/security/">Security</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &copy; Copyright 2009-2020 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
+</div>
+  </body>
+</html>

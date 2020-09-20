@@ -1,0 +1,223 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Version 1.9.0 &mdash; Apache Flume</title>
+    
+    <link rel="stylesheet" href="../_static/flume.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Apache Flume" href="../index.html" />
+    <link rel="up" title="Releases" href="index.html" />
+    <link rel="next" title="Version 1.8.0" href="1.8.0.html" />
+    <link rel="prev" title="Releases" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <table width="100%" border="0">
+    <tr>
+      <td width="10%">
+        <div class="logo">
+          <a href="../index.html">
+            <img class="logo" src="../_static/flume-logo.png" alt="Logo"/>
+          </a>
+        </div>
+      </td>
+      <td width="2%">
+          <span class="trademark">&trade;</span>
+      </td>
+      <td width="68%" align="center" class="pageTitle">Apache Flume<sup><span class="trademark">&trade;</span></sup>
+      </td>
+      <td width="20%">
+          <a href="http://www.apache.org">
+            <img src="../_static/feather-small.png" alt="Apache Software Foundation" height="70"/>
+          </a>
+      </td>
+    </tr>
+  </table>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="version-1-9-0">
+<h1>Version 1.9.0<a class="headerlink" href="#version-1-9-0" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Status of this release</p>
+<p>Apache Flume 1.9.0 is the eleventh release of Flume as an Apache top-level project
+(TLP). Apache Flume 1.9.0 is production-ready software.</p>
+<p class="rubric">Release Documentation</p>
+<ul class="simple">
+<li><a class="reference external" href="content/1.9.0/FlumeUserGuide.html">Flume 1.9.0 User Guide</a> (also in <a class="reference external" href="content/1.9.0/FlumeUserGuide.pdf">pdf</a>)</li>
+<li><a class="reference external" href="content/1.9.0/FlumeDeveloperGuide.html">Flume 1.9.0 Developer Guide</a> (also in <a class="reference external" href="content/1.9.0/FlumeDeveloperGuide.pdf">pdf</a>)</li>
+<li><a class="reference external" href="content/1.9.0/apidocs/index.html">Flume 1.9.0 API Documentation</a></li>
+</ul>
+<p class="rubric">Changes</p>
+<p>Release Notes - Flume - Version v1.9.0</p>
+<dl class="docutils">
+<dt>** New Feature</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2071">FLUME-2071</a>] - Flume Context doesn&#8217;t support float or double configuration values.</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2442">FLUME-2442</a>] - Need an alternative to providing clear text passwords in flume config</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3142">FLUME-3142</a>] - Adding HBase2 sink</li>
+</ul>
+</dd>
+<dt>** Improvement</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2653">FLUME-2653</a>] - Allow inUseSuffix to be null/empty</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2854">FLUME-2854</a>] - Parameterize jetty version in pom</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2977">FLUME-2977</a>] - Upgrade RAT to 0.12</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3050">FLUME-3050</a>] - add counters for error conditions and expose to monitor URL</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3182">FLUME-3182</a>] - Please add support for SSL/TLS for syslog (tcp) &amp; multi_port syslog (tcp) sources</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3186">FLUME-3186</a>] - Make asyncHbaseClient configuration parameters available from flume config</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3223">FLUME-3223</a>] - Flume HDFS Sink should retry close prior to performing a recoverLease</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3227">FLUME-3227</a>] - Add Rate Limiter to StressSource</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3239">FLUME-3239</a>] - Do not rename files in SpoolDirectorySource</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3246">FLUME-3246</a>] - Validate flume configuration to prevent larger source batch size than the channel transaction capacity</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3269">FLUME-3269</a>] - Support JSSE keystore/trustore -D system properties</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3275">FLUME-3275</a>] - Components supporting SSL/TLS should be able to specify protocol list</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3276">FLUME-3276</a>] - Components supporting SSL/TLS should be able to specify cipher suite list</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3280">FLUME-3280</a>] - Improve maven build to help code reviews by adding static code analyzer to it</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3281">FLUME-3281</a>] - Update to Kafka 2.0 client</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3282">FLUME-3282</a>] - Use slf4j in every component</li>
+</ul>
+</dd>
+<dt>** Bug</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1282">FLUME-1282</a>] - Flume 1.x build fails on Maven 2</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2232">FLUME-2232</a>] - Add findbugs to Flume build</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2436">FLUME-2436</a>] - Make hadoop-2 the default build profile</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2464">FLUME-2464</a>] - Remove hadoop-2 profile</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2786">FLUME-2786</a>] -  It will enter a deadlock state when modify the conf file before I stop flume-ng</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2894">FLUME-2894</a>] - Flume components should stop in the correct order (graceful shutdown)</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2973">FLUME-2973</a>] - Deadlock in hdfs sink</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2976">FLUME-2976</a>] - Exception when JMS source tries to connect to a Weblogic server without authentication</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2988">FLUME-2988</a>] - Kafka Sink metrics missing eventDrainAttemptCount</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2989">FLUME-2989</a>] - Kafka Channel metrics missing eventTakeAttemptCount and eventPutAttemptCount</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3056">FLUME-3056</a>] - TestApplication hangs indefinitely</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3101">FLUME-3101</a>] - taildir source may endless loop when tail a file</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3106">FLUME-3106</a>] - When batchSize of sink greater than transactionCapacity of Memory Channel, Flume can produce endless data</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3107">FLUME-3107</a>] - When batchSize of sink greater than transactionCapacity of File Channel, Flume can produce endless data</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3114">FLUME-3114</a>] - Upgrade commons-httpclient library dependency</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3117">FLUME-3117</a>] - Application  can be dead loop when call System.exit()  in methodconfigure</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3133">FLUME-3133</a>] - Add a ipHeader config in Syslog Sources</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3201">FLUME-3201</a>] - Fix SyslogUtil to handle RFC3164 format in december correctly</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3218">FLUME-3218</a>] - Fix external process config filter test</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3222">FLUME-3222</a>] - java.nio.file.NoSuchFileException thrown when files are being deleted from the TAILDIR source</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3237">FLUME-3237</a>] - Handling RuntimeExceptions coming from the JMS provider in JMSSource</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3253">FLUME-3253</a>] - JP Morgan Chase scan shows vulnerabilities for Splunk App using Apache Flume 1.8</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3265">FLUME-3265</a>] - Cannot set batch-size for LoadBalancingRpcClient</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3270">FLUME-3270</a>] - Close JMS resources in JMSMessageConsumer constructor in case of failure</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3278">FLUME-3278</a>] - Handling -D keystore parameters in Kafka components</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3294">FLUME-3294</a>] - Fix polling logic in TaildirSource</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3298">FLUME-3298</a>] - Make hadoop-common optional in flume-ng-hadoop-credential-store-config-filter</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3299">FLUME-3299</a>] - Fix log4j scopes in pom files</li>
+</ul>
+</dd>
+<dt>** Sub-task</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3158">FLUME-3158</a>] - Upgrade surefire version and config</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3243">FLUME-3243</a>] - Increase the default of hdfs.callTimeout and document it&#8217;s deprecation</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3303">FLUME-3303</a>] - Mention future configuration change in the release notes</li>
+</ul>
+</dd>
+<dt>** Test</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3195">FLUME-3195</a>] - Split up the TestKafkaChannel class</li>
+</ul>
+</dd>
+<dt>** Wish</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3087">FLUME-3087</a>] - Change log level from WARN to INFO when using default &#8220;maxIOWorkers&#8221; value.</li>
+</ul>
+</dd>
+<dt>** Task</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3183">FLUME-3183</a>] - Maven: generate SHA-512 checksum during deploy</li>
+</ul>
+</dd>
+<dt>** Dependency upgrade</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2698">FLUME-2698</a>] - Upgrade Jetty Version</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3115">FLUME-3115</a>] - Upgrade netty library dependency</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3194">FLUME-3194</a>] - upgrade derby to the latest (1.14.1.0) version</li>
+</ul>
+</dd>
+<dt>** Documentation</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1342">FLUME-1342</a>] - Document JMX monitoring API</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2723">FLUME-2723</a>] - Document the requirement that Channel&#8217;s transactionCapacity &gt;= batchSize of the source/sink</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3051">FLUME-3051</a>] - Mention the incompatibility of Kafka source with 0.8.x Kafka brokers</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-3228">FLUME-3228</a>] - Incorrect parameter name in timestamp interceptor docs</li>
+</ul>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3><a href="../index.html">Apache Flume</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getinvolved.html">How to Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download.html">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mailinglists.html">Mailing lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../team.html">Team</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source.html">Source Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+</ul>
+
+<h3>Resources</h3>
+
+<ul class="this-page-menu">
+    <li><a href="https://issues.apache.org/jira/browse/FLUME">Flume Issue Tracking (Jira)</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME">Flume Wiki</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME/Getting+Started">Getting Started Guide</a></li>
+    <li><a href="https://builds.apache.org/job/flume-trunk/">Jenkins Continuous Integration Server</a></li>
+    <li><a href="https://builds.apache.org/analysis/">Sonar Code Quality Reports</a></li>
+</ul>
+
+<h3>Apache</h3>
+
+<ul class="this-page-menu">
+    <li><a href="http://www.apache.org">Home</a></li>
+    <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+    <li><a href="http://www.apache.org/licenses">Licenses</a> </li>
+    <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+    <li><a href="http://www.apachecon.com">Conferences</a></li>
+    <li><a href="http://www.apache.org/security/">Security</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &copy; Copyright 2009-2020 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
+</div>
+  </body>
+</html>

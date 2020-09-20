@@ -1,0 +1,312 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Version 1.3.0 &mdash; Apache Flume</title>
+    
+    <link rel="stylesheet" href="../_static/flume.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Apache Flume" href="../index.html" />
+    <link rel="up" title="Releases" href="index.html" />
+    <link rel="next" title="Version 1.2.0" href="1.2.0.html" />
+    <link rel="prev" title="Version 1.3.1" href="1.3.1.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <table width="100%" border="0">
+    <tr>
+      <td width="10%">
+        <div class="logo">
+          <a href="../index.html">
+            <img class="logo" src="../_static/flume-logo.png" alt="Logo"/>
+          </a>
+        </div>
+      </td>
+      <td width="2%">
+          <span class="trademark">&trade;</span>
+      </td>
+      <td width="68%" align="center" class="pageTitle">Apache Flume<sup><span class="trademark">&trade;</span></sup>
+      </td>
+      <td width="20%">
+          <a href="http://www.apache.org">
+            <img src="../_static/feather-small.png" alt="Apache Software Foundation" height="70"/>
+          </a>
+      </td>
+    </tr>
+  </table>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="version-1-3-0">
+<h1>Version 1.3.0<a class="headerlink" href="#version-1-3-0" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Status of this release</p>
+<p>This release is the second release of Apache Flume as an Apache top level project and
+is the second release that is considered ready for production use. This release
+has has substantially more features and functionality along with bug fixes and other
+enhancements.</p>
+<p class="rubric">Release Documentation</p>
+<ul class="simple">
+<li><a class="reference external" href="content/1.3.0/FlumeUserGuide.pdf">Flume User Guide</a></li>
+<li><a class="reference external" href="content/1.3.0/FlumeDeveloperGuide.pdf">Flume Developer Guide</a></li>
+<li><a class="reference external" href="content/1.3.0/apidocs/index.html">API Documentation</a></li>
+</ul>
+<p class="rubric">Changes</p>
+<dl class="docutils">
+<dt>** New Feature</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-1199] - Add HTTP Post Source</li>
+<li>[FLUME-1371] - ElasticSearch Sink</li>
+<li>[FLUME-1382] - Flume adopt message from existing local Scribe</li>
+<li>[FLUME-1385] - Add a multiport syslog source</li>
+<li>[FLUME-1424] - File Channel should support encryption</li>
+<li>[FLUME-1425] - Create a SpoolDirectory Source and Client</li>
+<li>[FLUME-1488] - Load Balancing RPC client should support exponential backoff of failed nodes</li>
+<li>[FLUME-1537] - Dump RollingFileSink&#8217;s counter status when agent stops</li>
+<li>[FLUME-1657] - Regex Extractor Interceptor</li>
+</ul>
+</dd>
+<dt>** Improvement</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-946] - Allow multiplexing channel selector to specify optional channels.</li>
+<li>[FLUME-1337] - Add IDEA files to .gitignore</li>
+<li>[FLUME-1358] - Add a regex-based filtering interceptor</li>
+<li>[FLUME-1383] - Improve various log messages in FileChannel and HDFSSink</li>
+<li>[FLUME-1408] - ScheduledExecutorService does not log uncaught Throwables, we should log them</li>
+<li>[FLUME-1418] - Improvement for Log4j configuration</li>
+<li>[FLUME-1419] - Using system time if &#8216;timestamp&#8217; property is absent in event header</li>
+<li>[FLUME-1434] - Distinguish background worker with channel name</li>
+<li>[FLUME-1480] - Replace object descriptor with detailed component type plus name</li>
+<li>[FLUME-1487] - FileChannel format needs to be extensible</li>
+<li>[FLUME-1490] - Option to limit number of events sent in Stress source</li>
+<li>[FLUME-1496] - TestFileChannel is bloated</li>
+<li>[FLUME-1507] - Have &#8220;Topology Design Considerations&#8221; in User Guide</li>
+<li>[FLUME-1509] - Flume HDFS sink should allow for the use of different timezones when resolving sink paths</li>
+<li>[FLUME-1519] - LifecycleController prints tons of DEBUG messages</li>
+<li>[FLUME-1523] - Allow -X java opts to be passed to the agent on the command line</li>
+<li>[FLUME-1526] - LogFile log message is scary when no harm has been done</li>
+<li>[FLUME-1531] - Flume User Guide should provide more details on configuring the timestamp interceptor</li>
+<li>[FLUME-1535] - Ability to specify the capacity of MemoryChannel in bytes</li>
+<li>[FLUME-1536] - Support for batch size in StressSource</li>
+<li>[FLUME-1538] - Channels should expose channel fill ratio through JMX</li>
+<li>[FLUME-1543] - TestFileChannel should be factored into many tests</li>
+<li>[FLUME-1546] - File channel encryption: trim() passwords and warn user if he doesn&#8217;t have JCE policy file</li>
+<li>[FLUME-1548] - Build dies due to older protocol buffers compiler</li>
+<li>[FLUME-1550] - Use maven-antrun-plugin to save version</li>
+<li>[FLUME-1554] - FileChannel fails to build on machines with old protocol buffer compiler</li>
+<li>[FLUME-1556] - It would be nice if NullSink logged the number of event processed every 10K or so</li>
+<li>[FLUME-1560] - TestFileChannel* tests which fill up the channel should use larger batch size than 1</li>
+<li>[FLUME-1563] - FileChannel Encryption KeyProvider configuration properties should be more consistent</li>
+<li>[FLUME-1564] - FileChannel log file creation could be clarified and tested</li>
+<li>[FLUME-1569] - MemoryChannel uses an Integer as a lock</li>
+<li>[FLUME-1575] - FIleChannel Encryption should disallow a null key</li>
+<li>[FLUME-1603] - FileChannel capacity reached message is unclear</li>
+<li>[FLUME-1607] - FileChannel We should use a regex as opposed to simple filename filter when finding logs</li>
+<li>[FLUME-1609] - FileChannel detecting when the underlying file systems are full could provide cleaner error recovery</li>
+<li>[FLUME-1631] - Retire hdfs.txnEventMax in HDFS sink</li>
+<li>[FLUME-1645] - add hdfs.fileSuffix property to HDFSEventSink</li>
+<li>[FLUME-1660] - Close &#8220;idle&#8221; hdfs handles</li>
+<li>[FLUME-1675] - Ignore netbeans config files in rat &amp; git</li>
+<li>[FLUME-1681] - Disable empty-file unit test for Spooling File Reader</li>
+<li>[FLUME-1684] - Re-enable empty file unit test</li>
+<li>[FLUME-1689] - BodyTextSerializer should allow an option not to add a newline to each serialized event</li>
+<li>[FLUME-1692] - MultiportSyslogTCPSource user documentation and nickname</li>
+<li>[FLUME-1707] - Update FlumeDevGuide</li>
+<li>[FLUME-1706] - Website for 1.3 fails to build</li>
+<li>[FLUME-1698] - Update RELEASE-NOTES</li>
+<li>[FLUME-1711] - Update Flume User Guide</li>
+<li>[FLUME-1713] - Netcat source should allow for <em>not</em> returning &#8220;OK&#8221; upon receipt of each message.</li>
+<li>[FLUME-1740] - Remove contrib/ directory from Flume NG</li>
+<li>[FLUME-1750] - File spooling client uses -D as command line option</li>
+<li>[FLUME-1751] - User Guide Examples for File Channel encryption are broken in 1.3 rc5</li>
+<li>[FLUME-1749] - .gitignore and elipse related files should not be included in source tarball</li>
+<li>[FLUME-1752] - Update CHANGELOG for flume 1.3.0 rc6 to include latest changes</li>
+</ul>
+</dd>
+<dt>** Bug</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-1208] - Hbase sink should be built only in Hadoop-1.0  profile</li>
+<li>[FLUME-1256] - OutofMemory erros in Flume build</li>
+<li>[FLUME-1259] - Flume throws OutOfMemory error when sending data from netcat to avro source (negative test case)</li>
+<li>[FLUME-1276] - Create a static header interceptor</li>
+<li>[FLUME-1277] - Error parsing Syslog rfc 3164 messages with null values</li>
+<li>[FLUME-1310] - Make Asynch hbase sink test work with other versions of Hbase</li>
+<li>[FLUME-1354] - Update docs to show that recoverable memory channel is deprecated</li>
+<li>[FLUME-1362] - Port retrying in TestThriftLegacySource not working</li>
+<li>[FLUME-1363] - flume-ng-node - TestNetcatSource doesn&#8217;t try multiple ports</li>
+<li>[FLUME-1364] - Document the necessity of the timestamp header when using time-related escapes for hdfs sink paths</li>
+<li>[FLUME-1373] - Remove hardcoded file separator in HDFSEventSink</li>
+<li>[FLUME-1374] - Support ganglia reporting</li>
+<li>[FLUME-1376] - StaticInterceptor doc update</li>
+<li>[FLUME-1377] - ChannelProcessor clobbers exception with NPE if Channel.getTransaction() throws</li>
+<li>[FLUME-1389] - Flume gives opaque error if interceptor type not specified</li>
+<li>[FLUME-1391] - Use sync() instead of syncFs() in HDFS Sink to be compatible with hadoop 0.20.2</li>
+<li>[FLUME-1392] - Inactive channels get added to source channels list causing NPE</li>
+<li>[FLUME-1398] - Improve concurrency for async hbase sink</li>
+<li>[FLUME-1412] - Commons collections is used in file channel - even though it is not in pom.xml</li>
+<li>[FLUME-1414] - VersionInfo should not create a log instance</li>
+<li>[FLUME-1416] - Version Info should have hardcoded git repo address</li>
+<li>[FLUME-1417] - File Channel checkpoint can be bad leading to the channel being unable to start.</li>
+<li>[FLUME-1420] - Exception should be thrown if we cannot instaniate an EventSerializer</li>
+<li>[FLUME-1421] - PollableSourceRunner does not name it&#8217;s thread</li>
+<li>[FLUME-1422] - Fix &#8220;BarSource&#8221; Class Signature in Flume Developer Guide</li>
+<li>[FLUME-1426] - FileChannel Replay could be faster</li>
+<li>[FLUME-1428] - File Channel should not consider a file as inactive until all takes are committed.</li>
+<li>[FLUME-1432] - FileChannel should replay logs in the order they were written</li>
+<li>[FLUME-1437] - Checkpoint can miss pending takes.</li>
+<li>[FLUME-1470] - Syslog source does not parse facility correctly</li>
+<li>[FLUME-1479] - Multiple Sinks can connect to single Channel</li>
+<li>[FLUME-1482] - Flume should support exposing metrics via HTTP in JSON/some other web service format.</li>
+<li>[FLUME-1498] - File channel - Log updates and queue updates should be atomic</li>
+<li>[FLUME-1500] - Upgrade flume to use latest version of Avro - v1.7</li>
+<li>[FLUME-1504] - Test file channel times out randomly</li>
+<li>[FLUME-1506] - Child poms pull in specific versions of packages not in top level pom</li>
+<li>[FLUME-1512] - File Channel should not stop during a checkpoint.</li>
+<li>[FLUME-1513] - File Channel log close() method should not be synchronized</li>
+<li>[FLUME-1514] - Log4jAppender should also have flume-ng-configuration in the pom</li>
+<li>[FLUME-1515] - Fix flume-1.3.0 branch test failures on ASF Jenkins.</li>
+<li>[FLUME-1524] - TestMonitoredCounterGroup is flaky</li>
+<li>[FLUME-1525] - On some (slow) machines TestFileChannel can fail</li>
+<li>[FLUME-1534] - CheckpointRebuilder$ComparableFlumeEventPointer#equals does not work correctly.</li>
+<li>[FLUME-1540] - CheckpointBuilder needs to open logfiles in inactive mode</li>
+<li>[FLUME-1541] - Implement a SinkSelector for LoadBalancingSinkProcessor that includes failover mechanics</li>
+<li>[FLUME-1544] - Update dev guide to reflect the protoc requirement</li>
+<li>[FLUME-1545] - File channel missing implicit dependency on commons-lang</li>
+<li>[FLUME-1552] - TestFileChannelEncryption fails without a high encryption policy file</li>
+<li>[FLUME-1553] - TestFileChannelEncryption should be refactored to use TestFileChannelBase</li>
+<li>[FLUME-1555] - StressSource outputs bad log messages that reference (Sequence generator)</li>
+<li>[FLUME-1557] - It would be nice if SequenceGeneratorSource could do batching</li>
+<li>[FLUME-1562] - TestLoadBalancingSinkProcessor.testRoundRobinBackoffFailureRecovery is flaky, fails every once in a while...</li>
+<li>[FLUME-1565] - FileChannel Decryption in RandomReader is not thread safe</li>
+<li>[FLUME-1567] - Avro source should expose the number of active connections through JMX</li>
+<li>[FLUME-1570] - StressSource batching does not work unless maxTotalEvents is specified</li>
+<li>[FLUME-1572] - Add batching to FILE_ROLL sink</li>
+<li>[FLUME-1576] - CHECKPOINT_INCOMPLETE should be synced to disk before starting the checkpoint.</li>
+<li>[FLUME-1577] - CHECKPOINT_INCOMPLETE should be synced to disk before starting the checkpoint.</li>
+<li>[FLUME-1578] - Proposal to modify file channel encryption config</li>
+<li>[FLUME-1582] - flume-ng script should set LD_LIBRARY_PATH</li>
+<li>[FLUME-1583] - FileChannel fast full replay will always be used if enabled</li>
+<li>[FLUME-1595] - HDFS SequenceFile implementation is not durable due to not using syncFs()</li>
+<li>[FLUME-1606] - Rollbacks of Put transactions does not clear the transaction from inflight puts.</li>
+<li>[FLUME-1610] - HDFSEventSink and bucket writer have a race condition</li>
+<li>[FLUME-1611] - LogUtils regex can be precompiled</li>
+<li>[FLUME-1613] - All of the sink examples in the user guide are broken</li>
+<li>[FLUME-1616] - FileChannel will lose data in when rollback fails with IOException</li>
+<li>[FLUME-1620] - Update flume user guide for LoadBalancingSinkProcessor with the backoff changes.</li>
+<li>[FLUME-1622] - MemoryChannel throws NPE if the event has no body</li>
+<li>[FLUME-1638] - LoadBalancingRpcClient depends on com.google.common.collect.Maps</li>
+<li>[FLUME-1639] - Client SDK should not have dependency on Guava</li>
+<li>[FLUME-1650] - Fix flume-ng-hbase-sink compilation against Hadoop 2.X</li>
+<li>[FLUME-1651] - in the hadoop-0.23 profile HBase version needs to be at least 0.94.2</li>
+<li>[FLUME-1653] - Update Hadoop-23 profile to point to hadoop-2 alpha artifacts</li>
+<li>[FLUME-1655] - Doc update needed for Regex Filtering Interceptor</li>
+<li>[FLUME-1656] - flume-ng script disregards stderr  from hadoop command when finding hadoop jars</li>
+<li>[FLUME-1659] - JSON Handler should return simple events, not JSONEvents.</li>
+<li>[FLUME-1662] - Convert null body in events into zero length arrays.</li>
+<li>[FLUME-1664] - Logutils.getLogs remove unneeded directory check</li>
+<li>[FLUME-1671] - Add support for custom components to MonitoredCounterGroup</li>
+<li>[FLUME-1673] - MonitoredCounterGroup publishes this reference to platform MBean server in constructor</li>
+<li>[FLUME-1683] - Fix Time Granularity Bug in SpoolingFileLineReader</li>
+<li>[FLUME-1690] - Elastic Search Sink doesn&#8217;t run it&#8217;s unit tests</li>
+<li>[FLUME-1712] - Regex Extractor Interceptor tests have timezone issues</li>
+<li>[FLUME-1705] - SpoolDirectory short name points at the wrong class</li>
+<li>[FLUME-1719] - Example export command in README do not properly close the string</li>
+<li>[FLUME-1723] - AsyncHBase and Avro bring in different versions of Netty</li>
+<li>[FLUME-1726] - SpoolingFileLineReader must close the reader before renaming</li>
+<li>[FLUME-1743] - Multiport syslog tcp source does not load (v1.3 rc5)</li>
+</ul>
+</dd>
+<dt>** Test</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-1492] - Create integration test for file channel</li>
+</ul>
+</dd>
+<dt>** Task</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-1359] - Update main pom.xml file with regards to Flume TLP promotion</li>
+</ul>
+</dd>
+<dt>** Sub-task</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-897] - Implement write ahead log library</li>
+<li>[FLUME-1629] - Add Audience/Stability annotations</li>
+<li>[FLUME-1694] - Fix LICENSE file for binary artifacts</li>
+<li>[FLUME-1695] - Fix tarball names and directories</li>
+<li>[FLUME-1696] - Update build instructions as Flume build requires more memory</li>
+<li>[FLUME-1697] - Update CHANGELOG after 1.3.0 RC0</li>
+<li>[FLUME-1727] - Update CHANGELOG for rc4</li>
+</ul>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3><a href="../index.html">Apache Flume</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getinvolved.html">How to Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download.html">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mailinglists.html">Mailing lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../team.html">Team</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source.html">Source Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+</ul>
+
+<h3>Resources</h3>
+
+<ul class="this-page-menu">
+    <li><a href="https://issues.apache.org/jira/browse/FLUME">Flume Issue Tracking (Jira)</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME">Flume Wiki</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME/Getting+Started">Getting Started Guide</a></li>
+    <li><a href="https://builds.apache.org/job/flume-trunk/">Jenkins Continuous Integration Server</a></li>
+    <li><a href="https://builds.apache.org/analysis/">Sonar Code Quality Reports</a></li>
+</ul>
+
+<h3>Apache</h3>
+
+<ul class="this-page-menu">
+    <li><a href="http://www.apache.org">Home</a></li>
+    <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+    <li><a href="http://www.apache.org/licenses">Licenses</a> </li>
+    <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+    <li><a href="http://www.apachecon.com">Conferences</a></li>
+    <li><a href="http://www.apache.org/security/">Security</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &copy; Copyright 2009-2020 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
+</div>
+  </body>
+</html>

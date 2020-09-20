@@ -1,0 +1,13 @@
+notifications:
+  commits:      commits@flume.apache.org
+  issues:       issues@flume.apache.org
+  pullrequests: dev@flume.apache.org
+  jira_options: link label comment 
+
+staging:
+  profile: ~
+  whoami: asf-staging
+
+publish:
+  profile: ~
+  whoami: asf-site

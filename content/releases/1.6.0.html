@@ -1,0 +1,264 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Version 1.6.0 &mdash; Apache Flume</title>
+    
+    <link rel="stylesheet" href="../_static/flume.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Apache Flume" href="../index.html" />
+    <link rel="up" title="Releases" href="index.html" />
+    <link rel="next" title="Version 1.5.2" href="1.5.2.html" />
+    <link rel="prev" title="Version 1.7.0" href="1.7.0.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <table width="100%" border="0">
+    <tr>
+      <td width="10%">
+        <div class="logo">
+          <a href="../index.html">
+            <img class="logo" src="../_static/flume-logo.png" alt="Logo"/>
+          </a>
+        </div>
+      </td>
+      <td width="2%">
+          <span class="trademark">&trade;</span>
+      </td>
+      <td width="68%" align="center" class="pageTitle">Apache Flume<sup><span class="trademark">&trade;</span></sup>
+      </td>
+      <td width="20%">
+          <a href="http://www.apache.org">
+            <img src="../_static/feather-small.png" alt="Apache Software Foundation" height="70"/>
+          </a>
+      </td>
+    </tr>
+  </table>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="version-1-6-0">
+<h1>Version 1.6.0<a class="headerlink" href="#version-1-6-0" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Status of this release</p>
+<p>Apache Flume 1.6.0 is the ninth release of Flume as an Apache top-level project
+(TLP). Apache Flume 1.6.0 is production-ready software.</p>
+<p class="rubric">Release Documentation</p>
+<ul class="simple">
+<li><a class="reference external" href="content/1.6.0/FlumeUserGuide.html">Flume 1.6.0 User Guide</a> (also in <a class="reference external" href="content/1.6.0/FlumeUserGuide.pdf">pdf</a>)</li>
+<li><a class="reference external" href="content/1.6.0/FlumeDeveloperGuide.html">Flume 1.6.0 Developer Guide</a> (also in <a class="reference external" href="content/1.6.0/FlumeDeveloperGuide.pdf">pdf</a>)</li>
+<li><a class="reference external" href="content/1.6.0/apidocs/index.html">Flume 1.6.0 API Documentation</a></li>
+</ul>
+<p class="rubric">Changes</p>
+<p>Release Notes - Flume - Version v1.6.0</p>
+<dl class="docutils">
+<dt>** Sub-task</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2250">FLUME-2250</a>] - Add support for Kafka Source</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2251">FLUME-2251</a>] - Add support for Kafka Sink</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2677">FLUME-2677</a>] - Update versions in 1.6.0 branch</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2686">FLUME-2686</a>] - Update KEYS file for 1.6 release</li>
+</ul>
+</dd>
+<dt>** Bug</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1793">FLUME-1793</a>] - Unit test TestElasticSearchLogStashEventSerializer fails with IBM JDK</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1934">FLUME-1934</a>] - Spoolingdir source exception when reading multiple   zero size files</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2024">FLUME-2024</a>] - Add ExecSource flush timeout to Flume User Guide</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2126">FLUME-2126</a>] - Problem in elasticsearch sink when the event body is a complex field</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2148">FLUME-2148</a>] - Windows : Add  flume-env.ps1</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2214">FLUME-2214</a>] - FileChannelIntegrityTool needs documentation in user guide</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2245">FLUME-2245</a>] - HDFS files with errors unable to close</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2337">FLUME-2337</a>] - export JAVA_HOME in flume-env.sh.template and increase heap size</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2346">FLUME-2346</a>] - idLogFileMap in Log can lose track of file ids</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2404">FLUME-2404</a>] - Default maxReadBufferBytes might cause OOM and cause scribe source exit</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2408">FLUME-2408</a>] - Remove FLUME-1899 from Flume 1.5.0 change log.</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2416">FLUME-2416</a>] - Use CodecPool in compressed stream to prevent leak of direct buffers</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2420">FLUME-2420</a>] - HDFSEventSink#stop might throw ConcurrentModificationException</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2425">FLUME-2425</a>] - FileChannel should trim data and checkpoint directories</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2432">FLUME-2432</a>] - Update Kite dependency to 0.15.0</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2438">FLUME-2438</a>] - Make Syslog source message body configurable</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2450">FLUME-2450</a>] - Improve replay index insertion speed.</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2466">FLUME-2466</a>] - Embedded agent name cannot contain spaces</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2470">FLUME-2470</a>] - Kafka Sink and Source must use camel case for all configs.</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2472">FLUME-2472</a>] - SyslogUtils fails when system locale is not English</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2475">FLUME-2475</a>] - toLowerCase/toUpperCase used without Locale parameter to manipulate Enum</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2479">FLUME-2479</a>] - Kafka property auto.commit.enable is incorrect for KafkaSource</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2480">FLUME-2480</a>] - Typo in file channel exception: &#8220;Usable space exhaused&#8221;</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2481">FLUME-2481</a>] - TestFileChannelEncryption fails with System locale other than en_US</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2482">FLUME-2482</a>] - Race condition in File Channels&#8217; Log.removeOldLogs</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2486">FLUME-2486</a>] - TestExecSource fails on some environments</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2487">FLUME-2487</a>] - SyslogParser has rounding errors in timestamp parsing</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2488">FLUME-2488</a>] - TestElasticSearchRestClient fails on Oracle JDK 8</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2489">FLUME-2489</a>] - Upgrade Apache Curator to 2.6.0</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2492">FLUME-2492</a>] - Flume&#8217;s Kafka Source doesn&#8217;t account time correctly</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2495">FLUME-2495</a>] - Kafka Source may miss events when channel is not available</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2497">FLUME-2497</a>] - TCP and UDP syslog sources parsing the timestamp incorrectly</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2500">FLUME-2500</a>] - Add a channel that uses Kafka</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2505">FLUME-2505</a>] - Test added in FLUME-2502 is flaky</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2517">FLUME-2517</a>] - Performance issue: SimpleDateFormat constructor takes 30% of HDFSEventSink.process()</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2525">FLUME-2525</a>] - flume should handle a zero byte .flumespool-main.meta file for the spooldir source</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2538">FLUME-2538</a>] - TestResettableFileInputStream fails on JDK 8</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2556">FLUME-2556</a>] - TestBucketPath.testDateFormatHours fails intermittently</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2557">FLUME-2557</a>] - DatasetSink doesn&#8217;t work with Kerberos</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2560">FLUME-2560</a>] - Kafka channel entries missing for output jar generation</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2568">FLUME-2568</a>] - Additional fix for TestReliableSpoolingFileEventReader</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2578">FLUME-2578</a>] - Kafka source throws NPE if Kafka record has null key</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2586">FLUME-2586</a>] - HDFS Sink should have an option to try rename even if close fails</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2592">FLUME-2592</a>] - Specify main manifest attribute in flume tools jar</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2594">FLUME-2594</a>] - Close Async HBase Client if there are large number of consecutive timeouts</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2595">FLUME-2595</a>] - Add option to checkpoint on file channel shutdown</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2624">FLUME-2624</a>] - Improve Hive Sink performance</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2626">FLUME-2626</a>] - Remove trustmanager-type from Thrift RPC client</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2633">FLUME-2633</a>] - Update Kite dependency to 1.0.0</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2639">FLUME-2639</a>] - SecureThriftRpcClient client privileged calls throw IllegalAccessError</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2645">FLUME-2645</a>] - ipFilter.rules property name is wrong</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2654">FLUME-2654</a>] - Memory channel error message related to byteCapacity needs refining</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2657">FLUME-2657</a>] - Upgrade to Hive 1.0</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2658">FLUME-2658</a>] - Upgrade to Hbase 1.0</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2664">FLUME-2664</a>] - Site profile fails due to dependency issues</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2665">FLUME-2665</a>] - Update documentation for hdfs.closeTries based on FLUME-2586</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2670">FLUME-2670</a>] - Modify dependencies to not pull hadoop/hive related jars</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2673">FLUME-2673</a>] - Remove unused import in TestLog</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2678">FLUME-2678</a>] - Upgrade xalan to 2.7.2 to take care of CVE-2014-0107 vulnerability</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2679">FLUME-2679</a>] - Make hbase-1 the default profile</li>
+</ul>
+</dd>
+<dt>** Dependency upgrade</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2443">FLUME-2443</a>] - org.apache.hadoop.fs.FSDataOutputStream.sync() is deprecated in hadoop 2.4</li>
+</ul>
+</dd>
+<dt>** Documentation</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1594">FLUME-1594</a>] - Document JMX options</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2509">FLUME-2509</a>] - Add description for properties in Failover Sink Processor</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2630">FLUME-2630</a>] - Update documentation for Thrift Src/Sink SSL support and Kerberos support</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2635">FLUME-2635</a>] - Documentation for zookeeper dynamic configuration in flume</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2668">FLUME-2668</a>] - Document SecureThriftRpcClient/SecureRpcClientFactory in Flume Developer Guide</li>
+</ul>
+</dd>
+<dt>** Improvement</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1334">FLUME-1334</a>] - Write an startscript for flume agents on Windows</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1491">FLUME-1491</a>] - Dynamic configuration from Zookeeper watcher</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1521">FLUME-1521</a>] - Document the StressSource</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1710">FLUME-1710</a>] - JSONEvent.getBody should not return null</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1920">FLUME-1920</a>] - Test case TestFileChannel fails when flume is built from paths containing the string &#8220;hadoop&#8221;</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2237">FLUME-2237</a>] - Example config in User Guide to use same notation for Agent name</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2246">FLUME-2246</a>] - event body data size can make it configurable for logger sinker</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2273">FLUME-2273</a>] - ElasticSearchSink: Add handling for header substitution in indexName</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2373">FLUME-2373</a>] - Enable configuration to switch thrift source serialization protocol</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2385">FLUME-2385</a>] - Flume spans log file with &#8220;Spooling Directory Source runner has shutdown&#8221; messages at INFO level</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2401">FLUME-2401</a>] - Optionally Compress Backup Checkpoint</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2439">FLUME-2439</a>] - Update DatasetSink for Kite 0.15.0</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2462">FLUME-2462</a>] - Remove use of deprecated methods in DatasetSink</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2463">FLUME-2463</a>] - Add support for Hive and HBase datasets to DatasetSink</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2469">FLUME-2469</a>] - DatasetSink should load dataset when needed, not at startup</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2499">FLUME-2499</a>] - Include Kafka Message Key in Event Header, Updated Comments</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2502">FLUME-2502</a>] - Spool source&#8217;s directory listing is inefficient</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2558">FLUME-2558</a>] - Update javadoc for StressSource</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2562">FLUME-2562</a>] - Metrics for Flafka components</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2591">FLUME-2591</a>] - Kite DatasetSink 2.0</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2613">FLUME-2613</a>] - Tool/script for deleting individual message from queue</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2642">FLUME-2642</a>] - Limit kerberos relogin attempt</li>
+</ul>
+</dd>
+<dt>** New Feature</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1734">FLUME-1734</a>] - Create a Hive Sink based on the new Hive Streaming support</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2242">FLUME-2242</a>] - Flume Sink and Source for Apache Kafka</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2426">FLUME-2426</a>] - Support interceptors in the Embedded Agent</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2431">FLUME-2431</a>] - Add simple regex search-and-replace interceptor</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2570">FLUME-2570</a>] - Add option to not pad date fields</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2574">FLUME-2574</a>] - SSL Support for Thrift Rpc</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2631">FLUME-2631</a>] - End to End authentication in Flume</li>
+</ul>
+</dd>
+<dt>** Task</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2365">FLUME-2365</a>] - Please create a DOAP file for your TLP</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2454">FLUME-2454</a>] - Support batchSize to allow multiple events per transaction to the Kafka Sink</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2455">FLUME-2455</a>] - Documentation update for Kafka Sink</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2523">FLUME-2523</a>] - Document Kafka channel</li>
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-2612">FLUME-2612</a>] - Update kite to 0.17.1</li>
+</ul>
+</dd>
+<dt>** Test</dt>
+<dd><ul class="first last simple">
+<li>[<a class="reference external" href="https://issues.apache.org/jira/browse/FLUME-1501">FLUME-1501</a>] - Flume Scribe Source needs unit tests.</li>
+</ul>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3><a href="../index.html">Apache Flume</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getinvolved.html">How to Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download.html">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mailinglists.html">Mailing lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../team.html">Team</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source.html">Source Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+</ul>
+
+<h3>Resources</h3>
+
+<ul class="this-page-menu">
+    <li><a href="https://issues.apache.org/jira/browse/FLUME">Flume Issue Tracking (Jira)</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME">Flume Wiki</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME/Getting+Started">Getting Started Guide</a></li>
+    <li><a href="https://builds.apache.org/job/flume-trunk/">Jenkins Continuous Integration Server</a></li>
+    <li><a href="https://builds.apache.org/analysis/">Sonar Code Quality Reports</a></li>
+</ul>
+
+<h3>Apache</h3>
+
+<ul class="this-page-menu">
+    <li><a href="http://www.apache.org">Home</a></li>
+    <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+    <li><a href="http://www.apache.org/licenses">Licenses</a> </li>
+    <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+    <li><a href="http://www.apachecon.com">Conferences</a></li>
+    <li><a href="http://www.apache.org/security/">Security</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &copy; Copyright 2009-2020 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
+</div>
+  </body>
+</html>

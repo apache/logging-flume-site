@@ -1,0 +1,320 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Version 1.0.0 - Incubating &mdash; Apache Flume</title>
+    
+    <link rel="stylesheet" href="../_static/flume.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Apache Flume" href="../index.html" />
+    <link rel="up" title="Releases" href="index.html" />
+    <link rel="next" title="Mailing lists" href="../mailinglists.html" />
+    <link rel="prev" title="Version 1.1.0 - Incubating" href="1.1.0.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <table width="100%" border="0">
+    <tr>
+      <td width="10%">
+        <div class="logo">
+          <a href="../index.html">
+            <img class="logo" src="../_static/flume-logo.png" alt="Logo"/>
+          </a>
+        </div>
+      </td>
+      <td width="2%">
+          <span class="trademark">&trade;</span>
+      </td>
+      <td width="68%" align="center" class="pageTitle">Apache Flume<sup><span class="trademark">&trade;</span></sup>
+      </td>
+      <td width="20%">
+          <a href="http://www.apache.org">
+            <img src="../_static/feather-small.png" alt="Apache Software Foundation" height="70"/>
+          </a>
+      </td>
+    </tr>
+  </table>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="version-1-0-0-incubating">
+<h1>Version 1.0.0 - Incubating<a class="headerlink" href="#version-1-0-0-incubating" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Status of this release</p>
+<p>This release is the first release of Apache Flume within the Apache
+Incubator, and is labelled and should be considered as a beta version.</p>
+<p class="rubric">Release Documentation</p>
+<ul class="simple">
+<li><a class="reference external" href="content/1.0.0-incubating/apidocs/index.html">API Documentation</a></li>
+</ul>
+<p class="rubric">Changes</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Bug</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-830] - flume uber jar is missing files from flume-file-channel project</li>
+<li>[FLUME-831] - flume-jdbc-channel project has unnecessary direct dependency on log4j API</li>
+<li>[FLUME-833] - Audit Direct Library Deps for Flume NG</li>
+<li>[FLUME-835] - Issues during clean build of Flume NG</li>
+<li>[FLUME-850] - Upgrade the version of Hadoop we use for HDFS sink</li>
+<li>[FLUME-858] - HDFSWriterFactory is using operation == for string comparison</li>
+<li>[FLUME-863] - Use of unknown sink type leads to NullPointerException</li>
+<li>[FLUME-868] - RAT checks fail on builds.apache.org due to local maven repo</li>
+<li>[FLUME-869] - JDBC channel tests leave derby.log in module directory</li>
+<li>[FLUME-870] - LoggerSink contains two calls to Transaction#commit()</li>
+<li>[FLUME-880] - HDFSFormatterFactory is using == operator for String objects</li>
+<li>[FLUME-887] - Add maven assembly to build a source only artifact</li>
+<li>[FLUME-891] - flume-ng script doesn&#8217;t build the classpath properly</li>
+<li>[FLUME-894] - Add log4j as part of the build</li>
+<li>[FLUME-898] - Create DISCLAIMER file for Flume project</li>
+<li>[FLUME-900] - RELEASENOTES file needs to be ignored by RAT</li>
+<li>[FLUME-902] - Remove thrift references in NG build</li>
+<li>[FLUME-903] - Update project metadata in main pom</li>
+<li>[FLUME-904] - Update plugin and dependency repos referenced in the main pom</li>
+<li>[FLUME-905] - ExecSource silently fails after first transaction with channel</li>
+<li>[FLUME-906] - Maven Avro plugin missing an entry in plugin dep management</li>
+<li>[FLUME-907] - Maven assembly missing CHANGELOG and other misc files</li>
+<li>[FLUME-908] - Clean out old bin and conf contents</li>
+<li>[FLUME-909] -  org.apache.flume.node.TestAbstractLogicalNodeManager is failing on some machines</li>
+<li>[FLUME-910] - Typo in maven avro plugin groupId in plugin dep management</li>
+<li>[FLUME-911] - README should reference Apache Flume rather than just Flume</li>
+<li>[FLUME-912] - DEVNOTES contains outdated info</li>
+<li>[FLUME-913] - slf4j-log4j binding is excluded from the dist assembly due to test scope</li>
+<li>[FLUME-915] - Incorrect license information in various files</li>
+<li>[FLUME-916] - DISCLAIMER file has an incorrect URL</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Improvement</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-846] - Bump Avro version to 1.6.x</li>
+<li>[FLUME-867] - Pollable source and sink runners should reduce poll interval after several BACKOFFs</li>
+<li>[FLUME-871] - HDFS sink needs to handle blocked/hung append operation</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Question</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-856] - Move data across hosts</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Task</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-876] - Update README, NOTICE, LICENSE, and DEVNOTES files</li>
+<li>[FLUME-878] - Write release-ready Maven assembly descriptor</li>
+<li>[FLUME-879] - Document Flume&#8217;s ASF release process</li>
+<li>[FLUME-885] - Set version number of project to 1.0.0-SNAPSHOT for NG branch</li>
+<li>[FLUME-899] - Add Release notes</li>
+<li>[FLUME-901] - Make Flume NG build and pass tests against Hadoop 0.23 branch</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Release Notes - Flume - Version NG alpha 2 - 20111107</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Bug</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-773] - ExecSource doesn&#8217;t rollback transactions on errors</li>
+<li>[FLUME-805] - HDFS sink should mangle the names of incomplete files till they are closed</li>
+<li>[FLUME-815] - Test json config file has missing bind property</li>
+<li>[FLUME-816] - TestJdbcChannelProvider throws OOME based on RNG values</li>
+<li>[FLUME-817] - JdbcChannel can not be created by DefaultChannelFactory</li>
+<li>[FLUME-818] - PropertiesFileConfigurationProvider doesn&#8217;t properly log exceptions</li>
+<li>[FLUME-822] - JDBC channel lock acquisition failure during take()</li>
+<li>[FLUME-823] - The properties configuration provider should fail if the configuration file is not found</li>
+<li>[FLUME-825] - Need to remove dependency on hadoop core from flume-ng-core project</li>
+<li>[FLUME-827] - Avro client conn failure results in 60-second wait before terminating</li>
+<li>[FLUME-848] - Typo is TestHDFSEventSink path</li>
+<li>[FLUME-861] - AvroSource is failing on ClosedChannelException</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Improvement</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-819] - JDBC channel plugin is not registered with Flume node</li>
+<li>[FLUME-820] - JDBC channel should support capacity specification.</li>
+<li>[FLUME-821] - Derby schema handler should create the necessary indexes for fast lookups.</li>
+<li>[FLUME-826] - Update libs</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>New Feature</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-775] - Support text output</li>
+<li>[FLUME-814] - Add support for multiple channels to sources</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Task</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-812] - Enable Apache RAT checks during Maven build</li>
+<li>[FLUME-866] - Remove old plugins and log4j appender</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Release Notes - Flume - Version NG alpha 1 - 20111021</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Sub-task</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-737] - Port Flume OG sources and sinks to NG interfaces</li>
+<li>[FLUME-739] - Create NG node configuration components</li>
+<li>[FLUME-747] - Create NG command line launchers and daemon infrastructure</li>
+<li>[FLUME-760] - Implement JDBC based channel implementation</li>
+<li>[FLUME-761] - Implement HDFS Flume NG sink</li>
+<li>[FLUME-777] - Support text output for HDFS sink</li>
+<li>[FLUME-795] - Replace the non-transactional memory channel with new transactional memory channel</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Bug</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-769] - FLUME-728 - TestJsonFileConfigurationProvider fails due to timing issue</li>
+<li>[FLUME-784] - MemoryChannel should poll with timeout on take() rather than block indefinitely</li>
+<li>[FLUME-788] - Add more test cases to Flume-NG HDFS test</li>
+<li>[FLUME-803] - support re-entrant transaction for memory channel</li>
+<li>[FLUME-806] - Fix cast exception in MemoryChannel due to config type changes</li>
+<li>[FLUME-807] - Fix tests broken by FLUME-802 changes</li>
+<li>[FLUME-809] - Fix channel syntax javadoc bug in PropertiesFileConfigurationProvider</li>
+<li>[FLUME-811] - Remove logging of avro client that causes errors with proxy object methods</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Epic</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-728] - Flume NG refactoring</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Improvement</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-772] - MemoryChannel should push events back into channel on rollback</li>
+<li>[FLUME-774] - Move HDFS sink into a separate module</li>
+<li>[FLUME-781] - Add error checking to AvroCLICilent</li>
+<li>[FLUME-782] - Instrument AvroSource with counters</li>
+<li>[FLUME-783] - Add a batch event RPC call to AvroSource</li>
+<li>[FLUME-804] - Support help and node name arguments from the command line</li>
+<li>[FLUME-810] - Add help command line options to AvroCLIClient</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>New Feature</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-771] - Implement NG Avro source</li>
+<li>[FLUME-778] - Implement NG Avro sink</li>
+<li>[FLUME-779] - Create an Avro CLI for sending data to the Avro source</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Task</dt>
+<dd><ul class="first last simple">
+<li>[FLUME-780] - Reduce default log levels for chatty libraries</li>
+<li>[FLUME-785] - Write javadoc for builtin channels</li>
+<li>[FLUME-786] - Write javadoc for builtin sources</li>
+<li>[FLUME-787] - Write javadoc for builtin sinks</li>
+<li>[FLUME-801] - Write NG getting started guide</li>
+<li>[FLUME-802] - Complete PropertyFileConfigurationProvider implementation</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3><a href="../index.html">Apache Flume</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getinvolved.html">How to Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download.html">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mailinglists.html">Mailing lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../team.html">Team</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source.html">Source Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+</ul>
+
+<h3>Resources</h3>
+
+<ul class="this-page-menu">
+    <li><a href="https://issues.apache.org/jira/browse/FLUME">Flume Issue Tracking (Jira)</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME">Flume Wiki</a></li>
+    <li><a href="http://cwiki.apache.org/confluence/display/FLUME/Getting+Started">Getting Started Guide</a></li>
+    <li><a href="https://builds.apache.org/job/flume-trunk/">Jenkins Continuous Integration Server</a></li>
+    <li><a href="https://builds.apache.org/analysis/">Sonar Code Quality Reports</a></li>
+</ul>
+
+<h3>Apache</h3>
+
+<ul class="this-page-menu">
+    <li><a href="http://www.apache.org">Home</a></li>
+    <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+    <li><a href="http://www.apache.org/licenses">Licenses</a> </li>
+    <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+    <li><a href="http://www.apachecon.com">Conferences</a></li>
+    <li><a href="http://www.apache.org/security/">Security</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &copy; Copyright 2009-2020 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
+</div>
+  </body>
+</html>
