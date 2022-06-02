@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Flume 1.9.0 User Guide &mdash; Apache Flume</title>
+    <title>Flume 1.10.0 User Guide &mdash; Apache Flume</title>
     
     <link rel="stylesheet" href="_static/flume.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Apache Flume" href="index.html" />
     <link rel="up" title="Documentation" href="documentation.html" />
-    <link rel="next" title="Flume 1.9.0 Developer Guide" href="FlumeDeveloperGuide.html" />
+    <link rel="next" title="Flume 1.10.0 Developer Guide" href="FlumeDeveloperGuide.html" />
     <link rel="prev" title="Documentation" href="documentation.html" /> 
   </head>
   <body>
@@ -60,8 +60,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="flume-1-9-0-user-guide">
-<h1>Flume 1.9.0 User Guide<a class="headerlink" href="#flume-1-9-0-user-guide" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="flume-1-10-0-user-guide">
+<h1>Flume 1.10.0 User Guide<a class="headerlink" href="#flume-1-10-0-user-guide" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="overview">
@@ -141,6 +141,8 @@ Flume supports a durable file channel which is backed by the local file system.
 There&#8217;s also a memory channel which simply stores the events in an in-memory
 queue, which is faster but any events still left in the memory channel when an
 agent process dies can&#8217;t be recovered.</p>
+<p>Flume&#8217;s <cite>KafkaChannel</cite> uses Apache Kafka to stage events. Using a replicated
+Kafka topic as a channel helps avoiding event loss in case of a disk failure.</p>
 </div>
 </div>
 </div>
@@ -148,12 +150,11 @@ agent process dies can&#8217;t be recovered.</p>
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="setting-up-an-agent">
 <h3>Setting up an agent<a class="headerlink" href="#setting-up-an-agent" title="Permalink to this headline">¶</a></h3>
-<p>Flume agent configuration is stored in a local configuration file.  This is a
-text file that follows the Java properties file format.
-Configurations for one or more agents can be specified in the same
-configuration file. The configuration file includes properties of each source,
-sink and channel in an agent and how they are wired together to form data
-flows.</p>
+<p>Flume agent configuration is stored in one or more configuration files that
+follow the Java properties file format. Configurations for one or more agents
+can be specified in these configuration files. The configuration includes
+properties of each source, sink and channel in an agent and how they are wired
+together to form data flows.</p>
 <div class="section" id="configuring-individual-components">
 <h4>Configuring individual components<a class="headerlink" href="#configuring-individual-components" title="Permalink to this headline">¶</a></h4>
 <p>Each component (source, sink or channel) in the flow has a name, type, and set
@@ -242,9 +243,73 @@ OK</pre>
 </div>
 <p>Congratulations - you&#8217;ve successfully configured and deployed a Flume agent! Subsequent sections cover agent configuration in much more detail.</p>
 </div>
-<div class="section" id="using-environment-variables-in-configuration-files">
-<h4>Using environment variables in configuration files<a class="headerlink" href="#using-environment-variables-in-configuration-files" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="configuration-from-uris">
+<h4>Configuration from URIs<a class="headerlink" href="#configuration-from-uris" title="Permalink to this headline">¶</a></h4>
+<p>As of version 1.10.0 Flume supports being configured using URIs instead of just from local files. Direct support
+for HTTP(S), file, and classpath URIs is included. The HTTP support includes support for authentication using
+basic authorization but other authorization mechanisms may be supported by specifying the fully qualified name
+of the class that implements the AuthorizationProvider interface using the &#8211;auth-provider option. HTTP also
+supports reloading of configuration files using polling if the target server properly responds to the If-Modified-Since
+header.</p>
+<p>To specify credentials for HTTP authentication add:</p>
+<div class="highlight-none"><div class="highlight"><pre>--conf-user userid --conf-password password
+</pre></div>
+</div>
+<p>to the startup command.</p>
+</div>
+<div class="section" id="multiple-configuration-files">
+<h4>Multiple Configuration Files<a class="headerlink" href="#multiple-configuration-files" title="Permalink to this headline">¶</a></h4>
+<p>As of version 1.10.0 Flume supports being configured from multiple configuration files instead of just one.
+This more easily allows values to be overridden or added based on specific environments. Each file should
+be configured using its own &#8211;conf-file or &#8211;conf-uri option. However, all files should either be provided
+with &#8211;conf-file or with &#8211;conf-uri. If &#8211;conf-file and &#8211;conf-uri appear together as options all &#8211;conf-uri
+configurations will be processed before any of the &#8211;conf-file configurations are merged.</p>
+<p>For example, a configuration of:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --conf-uri http://localhost:80/flume.conf --conf-uri http://localhost:80/override.conf --name a1 -Dflume.root.logger=INFO,console
+</pre></div>
+</div>
+<p>will cause flume.conf to be read first, override.conf to be merged with it and finally example.conf would be
+merged last. If it is desirec to have example.conf be the base configuration it should be specified using the
+&#8211;conf-uri option either as:</p>
+<div class="highlight-none"><div class="highlight"><pre>--conf-uri classpath://example.conf
+or
+--conf-uri file:///example.conf
+</pre></div>
+</div>
+<p>depending on how it should be accessed.</p>
+</div>
+<div class="section" id="using-environment-variables-system-properies-or-other-properties-configuration-files">
+<h4>Using environment variables, system properies, or other properties configuration files<a class="headerlink" href="#using-environment-variables-system-properies-or-other-properties-configuration-files" title="Permalink to this headline">¶</a></h4>
 <p>Flume has the ability to substitute environment variables in the configuration. For example:</p>
+<div class="highlight-none"><div class="highlight"><pre>a1.sources = r1
+a1.sources.r1.type = netcat
+a1.sources.r1.bind = 0.0.0.0
+a1.sources.r1.port = ${env:NC_PORT}
+a1.sources.r1.channels = c1
+</pre></div>
+</div>
+<p>NB: it currently works for values only, not for keys. (Ie. only on the &#8220;right side&#8221; of the <cite>=</cite> mark of the config lines.)</p>
+<p>As of version 1.10.0 Flume resolves configuration values using Apache Commons Text&#8217;s StringSubstitutor
+class using the default set of Lookups along with a lookup that uses the configuration files as a
+source for replacement values.</p>
+<dl class="docutils">
+<dt>For example::</dt>
+<dd>$ NC_PORT=44444 bin/flume-ng agent &#8211;conf conf &#8211;conf-file example.conf &#8211;name a1 -Dflume.root.logger=INFO,console</dd>
+</dl>
+<p>Note the above is just an example, environment variables can be configured in other ways, including being set in <cite>conf/flume-env.sh</cite>.</p>
+<p>As noted, system properties are also supported, so the configuration:</p>
+<div class="highlight-none"><div class="highlight"><pre>a1.sources = r1
+a1.sources.r1.type = netcat
+a1.sources.r1.bind = 0.0.0.0
+a1.sources.r1.port = ${sys:NC_PORT}
+a1.sources.r1.channels = c1
+</pre></div>
+</div>
+<p>could be used and the startup command could be:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --name a1 -Dflume.root.logger=INFO,console -DNC_PORT=44444
+</pre></div>
+</div>
+<p>Furthermore, because multiple configuration files are allowed the first file could contain:</p>
 <div class="highlight-none"><div class="highlight"><pre>a1.sources = r1
 a1.sources.r1.type = netcat
 a1.sources.r1.bind = 0.0.0.0
@@ -252,17 +317,31 @@ a1.sources.r1.port = ${NC_PORT}
 a1.sources.r1.channels = c1
 </pre></div>
 </div>
-<p>NB: it currently works for values only, not for keys. (Ie. only on the &#8220;right side&#8221; of the <cite>=</cite> mark of the config lines.)</p>
-<p>This can be enabled via Java system properties on agent invocation by setting <cite>propertiesImplementation = org.apache.flume.node.EnvVarResolverProperties</cite>.</p>
-<dl class="docutils">
-<dt>For example::</dt>
-<dd>$ NC_PORT=44444 bin/flume-ng agent &#8211;conf conf &#8211;conf-file example.conf &#8211;name a1 -Dflume.root.logger=INFO,console -DpropertiesImplementation=org.apache.flume.node.EnvVarResolverProperties</dd>
-</dl>
-<p>Note the above is just an example, environment variables can be configured in other ways, including being set in <cite>conf/flume-env.sh</cite>.</p>
+<p>and the override file could contain:</p>
+<div class="highlight-none"><div class="highlight"><pre>NC_PORT = 44444
+</pre></div>
+</div>
+<p>In this case the startup command could be:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --conf-file override.conf --name a1 -Dflume.root.logger=INFO,console
+</pre></div>
+</div>
+<p>Note that the method for specifying environment variables as was done in prior versions will stil work
+but has been deprecated in favor of using ${env:varName}.</p>
+</div>
+<div class="section" id="using-a-command-options-file">
+<h4>Using a command options file<a class="headerlink" href="#using-a-command-options-file" title="Permalink to this headline">¶</a></h4>
+<p>Instead of specifying all the command options on the command line as of version 1.10.0 command
+options may be placed in either /etc/flume/flume.opts or flume.opts on the classpath. An example
+might be:</p>
+<div class="highlight-none"><div class="highlight"><pre>conf-file = example.conf
+conf-file = override.conf
+name = a1
+</pre></div>
+</div>
 </div>
 <div class="section" id="logging-raw-data">
 <h4>Logging raw data<a class="headerlink" href="#logging-raw-data" title="Permalink to this headline">¶</a></h4>
-<p>Logging the raw stream of data flowing through the ingest pipeline is not desired behaviour in
+<p>Logging the raw stream of data flowing through the ingest pipeline is not desired behavior in
 many production environments because this may result in leaking sensitive data or security related
 configurations, such as secret keys, to Flume log files.
 By default, Flume will not log such information. On the other hand, if the data pipeline is broken,
@@ -486,10 +565,10 @@ component:</p>
 <span class="na">&lt;Agent&gt;.sources.&lt;Source&gt;.&lt;someProperty&gt;</span> <span class="o">=</span> <span class="s">&lt;someValue&gt;</span>
 
 <span class="c"># properties for channels</span>
-<span class="na">&lt;Agent&gt;.channel.&lt;Channel&gt;.&lt;someProperty&gt;</span> <span class="o">=</span> <span class="s">&lt;someValue&gt;</span>
+<span class="na">&lt;Agent&gt;.channels.&lt;Channel&gt;.&lt;someProperty&gt;</span> <span class="o">=</span> <span class="s">&lt;someValue&gt;</span>
 
 <span class="c"># properties for sinks</span>
-<span class="na">&lt;Agent&gt;.sources.&lt;Sink&gt;.&lt;someProperty&gt;</span> <span class="o">=</span> <span class="s">&lt;someValue&gt;</span>
+<span class="na">&lt;Agent&gt;.sinks.&lt;Sink&gt;.&lt;someProperty&gt;</span> <span class="o">=</span> <span class="s">&lt;someValue&gt;</span>
 </pre></div>
 </div>
 <p>The property &#8220;type&#8221; needs to be set for each component for Flume to understand
@@ -535,7 +614,7 @@ linked to form multiple flows:</p>
 </pre></div>
 </div>
 <p>Then you can link the sources and sinks to their corresponding channels (for
-sources) of channel (for sinks) to setup two different flows. For example, if
+sources) or channel (for sinks) to setup two different flows. For example, if
 you need to setup two flows in an agent, one going from an external avro client
 to external HDFS and another from output of a tail to avro sink, then here&#8217;s a
 config to do that:</p>
@@ -1544,7 +1623,7 @@ very late if new files keep coming in the spooling directory.</td>
 <td>The maximum time (in millis) to wait between consecutive attempts to
 write to the channel(s) if the channel is full. The source will start at
 a low backoff and increase it exponentially each time the channel throws a
-ChannelException, upto the value specified by this parameter.</td>
+ChannelException, up to the value specified by this parameter.</td>
 </tr>
 <tr class="row-odd"><td>batchSize</td>
 <td>100</td>
@@ -1574,7 +1653,7 @@ Defaults to parsing each line as an event. The class specified must implement
 </tr>
 <tr class="row-even"><td>bufferMaxLines</td>
 <td>&#8211;</td>
-<td>(Obselete) This option is now ignored.</td>
+<td>(Obsolete) This option is now ignored.</td>
 </tr>
 <tr class="row-odd"><td>bufferMaxLineLength</td>
 <td>5000</td>
@@ -1838,7 +1917,7 @@ Requires that the file system keeps track of modification times with at least a 
 Use at your own risk.</p>
 </div>
 <p>Experimental source that connects via Streaming API to the 1% sample twitter
-firehose, continously downloads tweets, converts them to Avro format and
+firehose, continuously downloads tweets, converts them to Avro format and
 sends Avro events to a downstream Flume sink. Requires the consumer and
 access tokens and secrets of a Twitter developer account.
 Required properties are in <strong>bold</strong>.</p>
@@ -1940,7 +2019,7 @@ indicates that they are part of the same consumer group</td>
 </tr>
 <tr class="row-even"><td><strong>kafka.topics</strong></td>
 <td>&#8211;</td>
-<td>Comma-separated list of topics the kafka consumer will read messages from.</td>
+<td>Comma-separated list of topics the Kafka consumer will read messages from.</td>
 </tr>
 <tr class="row-odd"><td><strong>kafka.topics.regex</strong></td>
 <td>&#8211;</td>
@@ -2038,8 +2117,8 @@ and value.deserializer(org.apache.kafka.common.serialization.ByteArraySerializer
 </tr>
 <tr class="row-even"><td>zookeeperConnect</td>
 <td>&#8211;</td>
-<td>Is no longer supported by kafka consumer client since 0.9.x. Use kafka.bootstrap.servers
-to establish connection with kafka cluster</td>
+<td>Is no longer supported by Kafka consumer client since 0.9.x. Use kafka.bootstrap.servers
+to establish connection with Kafka cluster</td>
 </tr>
 <tr class="row-odd"><td>migrateZookeeperOffsets</td>
 <td>true</td>
@@ -2104,7 +2183,7 @@ security provider, cipher suites, enabled protocols, truststore or keystore type
 <span class="na">a1.sources.source1.kafka.consumer.ssl.truststore.password</span><span class="o">=</span><span class="s">&lt;password to access the truststore&gt;</span>
 </pre></div>
 </div>
-<p>Specyfing the truststore is optional here, the global truststore can be used instead.
+<p>Specifying the truststore is optional here, the global truststore can be used instead.
 For more details about the global SSL setup, see the <a class="reference internal" href="#ssl-tls-support">SSL/TLS support</a> section.</p>
 <p>Note: By default the property <tt class="docutils literal"><span class="pre">ssl.endpoint.identification.algorithm</span></tt>
 is not defined, so hostname verification is not performed.
@@ -3609,16 +3688,32 @@ fully-qualified class name of an implementation of the
 </tbody>
 </table>
 <p>Deprecated Properties</p>
-<p>Name                    Default       Description
-======================  ============  ======================================================================
-hdfs.callTimeout        30000         Number of milliseconds allowed for HDFS operations, such as open, write, flush, close. This number should be increased if many HDFS timeout operations are occurring.
-======================  ============  ======================================================================</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="10%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>hdfs.callTimeout</td>
+<td>30000</td>
+<td>Number of milliseconds allowed for HDFS operations, such as open, write, flush, close.
+This number should be increased if many HDFS timeout operations are occurring.</td>
+</tr>
+</tbody>
+</table>
 <p>Example for agent named a1:</p>
 <div class="highlight-properties"><div class="highlight"><pre><span class="na">a1.channels</span> <span class="o">=</span> <span class="s">c1</span>
 <span class="na">a1.sinks</span> <span class="o">=</span> <span class="s">k1</span>
 <span class="na">a1.sinks.k1.type</span> <span class="o">=</span> <span class="s">hdfs</span>
 <span class="na">a1.sinks.k1.channel</span> <span class="o">=</span> <span class="s">c1</span>
-<span class="na">a1.sinks.k1.hdfs.path</span> <span class="o">=</span> <span class="s">/flume/events/%y-%m-%d/%H%M/%S</span>
+<span class="na">a1.sinks.k1.hdfs.path</span> <span class="o">=</span> <span class="s">/flume/events/%Y-%m-%d/%H%M/%S</span>
 <span class="na">a1.sinks.k1.hdfs.filePrefix</span> <span class="o">=</span> <span class="s">events-</span>
 <span class="na">a1.sinks.k1.hdfs.round</span> <span class="o">=</span> <span class="s">true</span>
 <span class="na">a1.sinks.k1.hdfs.roundValue</span> <span class="o">=</span> <span class="s">10</span>
@@ -3871,7 +3966,7 @@ this automatically is to use the TimestampInterceptor.</p>
 <span class="na">a1.sinks.k1.hive.metastore</span> <span class="o">=</span> <span class="s">thrift://127.0.0.1:9083</span>
 <span class="na">a1.sinks.k1.hive.database</span> <span class="o">=</span> <span class="s">logsdb</span>
 <span class="na">a1.sinks.k1.hive.table</span> <span class="o">=</span> <span class="s">weblogs</span>
-<span class="na">a1.sinks.k1.hive.partition</span> <span class="o">=</span> <span class="s">asia,%{country},%y-%m-%d-%H-%M</span>
+<span class="na">a1.sinks.k1.hive.partition</span> <span class="o">=</span> <span class="s">asia,%{country},%Y-%m-%d-%H-%M</span>
 <span class="na">a1.sinks.k1.useLocalTimeStamp</span> <span class="o">=</span> <span class="s">false</span>
 <span class="na">a1.sinks.k1.round</span> <span class="o">=</span> <span class="s">true</span>
 <span class="na">a1.sinks.k1.roundValue</span> <span class="o">=</span> <span class="s">10</span>
@@ -4669,108 +4764,6 @@ will read this information from the first hbase-site.xml file in the classpath.<
 <span class="c"># a1.sinks.k1.morphlineId = morphline1</span>
 <span class="c"># a1.sinks.k1.batchSize = 1000</span>
 <span class="c"># a1.sinks.k1.batchDurationMillis = 1000</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="elasticsearchsink">
-<h4>ElasticSearchSink<a class="headerlink" href="#elasticsearchsink" title="Permalink to this headline">¶</a></h4>
-<p>This sink writes data to an elasticsearch cluster. By default, events will be written so that the <a class="reference external" href="http://kibana.org">Kibana</a> graphical interface
-can display them - just as if <a class="reference external" href="https://logstash.net">logstash</a> wrote them.</p>
-<p>The elasticsearch and lucene-core jars required for your environment must be placed in the lib directory of the Apache Flume installation.
-Elasticsearch requires that the major version of the client JAR match that of the server and that both are running the same minor version
-of the JVM. SerializationExceptions will appear if this is incorrect. To
-select the required version first determine the version of elasticsearch and the JVM version the target cluster is running. Then select an elasticsearch client
-library which matches the major version. A 0.19.x client can talk to a 0.19.x cluster; 0.20.x can talk to 0.20.x and 0.90.x can talk to 0.90.x. Once the
-elasticsearch version has been determined then read the pom.xml file to determine the correct lucene-core JAR version to use. The Flume agent
-which is running the ElasticSearchSink should also match the JVM the target cluster is running down to the minor version.</p>
-<p>Events will be written to a new index every day. The name will be &lt;indexName&gt;-yyyy-MM-dd where &lt;indexName&gt; is the indexName parameter. The sink
-will start writing to a new index at midnight UTC.</p>
-<p>Events are serialized for elasticsearch by the ElasticSearchLogStashEventSerializer by default. This behaviour can be
-overridden with the serializer parameter. This parameter accepts implementations of org.apache.flume.sink.elasticsearch.ElasticSearchEventSerializer
-or org.apache.flume.sink.elasticsearch.ElasticSearchIndexRequestBuilderFactory. Implementing ElasticSearchEventSerializer is deprecated in favour of
-the more powerful ElasticSearchIndexRequestBuilderFactory.</p>
-<p>The type is the FQCN: org.apache.flume.sink.elasticsearch.ElasticSearchSink</p>
-<p>Required properties are in <strong>bold</strong>.</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="8%" />
-<col width="37%" />
-<col width="54%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Property Name</th>
-<th class="head">Default</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><strong>channel</strong></td>
-<td>&#8211;</td>
-<td>&nbsp;</td>
-</tr>
-<tr class="row-odd"><td><strong>type</strong></td>
-<td>&#8211;</td>
-<td>The component type name, needs to be <tt class="docutils literal"><span class="pre">org.apache.flume.sink.elasticsearch.ElasticSearchSink</span></tt></td>
-</tr>
-<tr class="row-even"><td><strong>hostNames</strong></td>
-<td>&#8211;</td>
-<td>Comma separated list of hostname:port, if the port is not present the default port &#8216;9300&#8217; will be used</td>
-</tr>
-<tr class="row-odd"><td>indexName</td>
-<td>flume</td>
-<td>The name of the index which the date will be appended to. Example &#8216;flume&#8217; -&gt; &#8216;flume-yyyy-MM-dd&#8217;
-Arbitrary header substitution is supported, eg. %{header} replaces with value of named event header</td>
-</tr>
-<tr class="row-even"><td>indexType</td>
-<td>logs</td>
-<td>The type to index the document to, defaults to &#8216;log&#8217;
-Arbitrary header substitution is supported, eg. %{header} replaces with value of named event header</td>
-</tr>
-<tr class="row-odd"><td>clusterName</td>
-<td>elasticsearch</td>
-<td>Name of the ElasticSearch cluster to connect to</td>
-</tr>
-<tr class="row-even"><td>batchSize</td>
-<td>100</td>
-<td>Number of events to be written per txn.</td>
-</tr>
-<tr class="row-odd"><td>ttl</td>
-<td>&#8211;</td>
-<td>TTL in days, when set will cause the expired documents to be deleted automatically,
-if not set documents will never be automatically deleted. TTL is accepted both in the earlier form of
-integer only e.g. a1.sinks.k1.ttl = 5 and also with a qualifier ms (millisecond), s (second), m (minute),
-h (hour), d (day) and w (week). Example a1.sinks.k1.ttl = 5d will set TTL to 5 days. Follow
-<a class="reference external" href="http://www.elasticsearch.org/guide/reference/mapping/ttl-field/">http://www.elasticsearch.org/guide/reference/mapping/ttl-field/</a> for more information.</td>
-</tr>
-<tr class="row-even"><td>serializer</td>
-<td>org.apache.flume.sink.elasticsearch.ElasticSearchLogStashEventSerializer</td>
-<td>The ElasticSearchIndexRequestBuilderFactory or ElasticSearchEventSerializer to use. Implementations of
-either class are accepted but ElasticSearchIndexRequestBuilderFactory is preferred.</td>
-</tr>
-<tr class="row-odd"><td>serializer.*</td>
-<td>&#8211;</td>
-<td>Properties to be passed to the serializer.</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Header substitution is a handy to use the value of an event header to dynamically decide the indexName and indexType to use when storing the event.
-Caution should be used in using this feature as the event submitter now has control of the indexName and indexType.
-Furthermore, if the elasticsearch REST client is used then the event submitter has control of the URL path used.</p>
-</div>
-<p>Example for agent named a1:</p>
-<div class="highlight-properties"><div class="highlight"><pre><span class="na">a1.channels</span> <span class="o">=</span> <span class="s">c1</span>
-<span class="na">a1.sinks</span> <span class="o">=</span> <span class="s">k1</span>
-<span class="na">a1.sinks.k1.type</span> <span class="o">=</span> <span class="s">elasticsearch</span>
-<span class="na">a1.sinks.k1.hostNames</span> <span class="o">=</span> <span class="s">127.0.0.1:9200,127.0.0.2:9300</span>
-<span class="na">a1.sinks.k1.indexName</span> <span class="o">=</span> <span class="s">foo_index</span>
-<span class="na">a1.sinks.k1.indexType</span> <span class="o">=</span> <span class="s">bar_type</span>
-<span class="na">a1.sinks.k1.clusterName</span> <span class="o">=</span> <span class="s">foobar_cluster</span>
-<span class="na">a1.sinks.k1.batchSize</span> <span class="o">=</span> <span class="s">500</span>
-<span class="na">a1.sinks.k1.ttl</span> <span class="o">=</span> <span class="s">5d</span>
-<span class="na">a1.sinks.k1.serializer</span> <span class="o">=</span> <span class="s">org.apache.flume.sink.elasticsearch.ElasticSearchDynamicSerializer</span>
-<span class="na">a1.sinks.k1.channel</span> <span class="o">=</span> <span class="s">c1</span>
 </pre></div>
 </div>
 </div>
@@ -6125,6 +6118,43 @@ Required properties are in <strong>bold</strong>.</p>
 simply ignored. Since c1 and c2 are not marked optional, failure to write to
 those channels will cause the transaction to fail.</p>
 </div>
+<div class="section" id="load-balancing-channel-selector">
+<h4>Load Balancing Channel Selector<a class="headerlink" href="#load-balancing-channel-selector" title="Permalink to this headline">¶</a></h4>
+<p>Load balancing channel selector provides the ability to load-balance flow over multiple channels. This
+effectively allows the incoming data to be processed on multiple threads. It maintains an indexed list of active channels on which the load must be distributed. Implementation supports distributing load using either via round_robin or random selection mechanisms. The choice of selection mechanism defaults to round_robin type, but can be overridden via configuration.</p>
+<p>Required properties are in <strong>bold</strong>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="20%" />
+<col width="63%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Property Name</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>selector.type</td>
+<td>replicating</td>
+<td>The component type name, needs to be <tt class="docutils literal"><span class="pre">load_balancing</span></tt></td>
+</tr>
+<tr class="row-odd"><td>selector.policy</td>
+<td><tt class="docutils literal"><span class="pre">round_robin</span></tt></td>
+<td>Selection mechanism. Must be either <tt class="docutils literal"><span class="pre">round_robin</span></tt> or <tt class="docutils literal"><span class="pre">random</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+<p>Example for agent named a1 and it&#8217;s source called r1:</p>
+<div class="highlight-properties"><div class="highlight"><pre><span class="na">a1.sources</span> <span class="o">=</span> <span class="s">r1</span>
+<span class="na">a1.channels</span> <span class="o">=</span> <span class="s">c1 c2 c3 c4</span>
+<span class="na">a1.sources.r1.channels</span> <span class="o">=</span> <span class="s">c1 c2 c3 c4</span>
+<span class="na">a1.sources.r1.selector.type</span> <span class="o">=</span> <span class="s">load_balancing</span>
+<span class="na">a1.sources.r1.selector.policy</span> <span class="o">=</span> <span class="s">round_robin</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="multiplexing-channel-selector">
 <h4>Multiplexing Channel Selector<a class="headerlink" href="#multiplexing-channel-selector" title="Permalink to this headline">¶</a></h4>
 <p>Required properties are in <strong>bold</strong>.</p>
@@ -6452,7 +6482,7 @@ Flume events in the Avro RPC mechanism.</p>
 <p>Example for agent named a1:</p>
 <div class="highlight-properties"><div class="highlight"><pre><span class="na">a1.sinks.k1.type</span> <span class="o">=</span> <span class="s">hdfs</span>
 <span class="na">a1.sinks.k1.channel</span> <span class="o">=</span> <span class="s">c1</span>
-<span class="na">a1.sinks.k1.hdfs.path</span> <span class="o">=</span> <span class="s">/flume/events/%y-%m-%d/%H%M/%S</span>
+<span class="na">a1.sinks.k1.hdfs.path</span> <span class="o">=</span> <span class="s">/flume/events/%Y-%m-%d/%H%M/%S</span>
 <span class="na">a1.sinks.k1.serializer</span> <span class="o">=</span> <span class="s">avro_event</span>
 <span class="na">a1.sinks.k1.serializer.compressionCodec</span> <span class="o">=</span> <span class="s">snappy</span>
 </pre></div>
@@ -7190,7 +7220,7 @@ Provider password can be set with the HADOOP_CREDSTORE_PASSWORD environment vari
 <h2>Log4J Appender<a class="headerlink" href="#log4j-appender" title="Permalink to this headline">¶</a></h2>
 <p>Appends Log4j events to a flume agent&#8217;s avro source. A client using this
 appender must have the flume-ng-sdk in the classpath (eg,
-flume-ng-sdk-1.9.0.jar).
+flume-ng-sdk-1.10.0.jar).
 Required properties are in <strong>bold</strong>.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -7270,7 +7300,7 @@ then the schema will be included as a Flume header.</p>
 <h2>Load Balancing Log4J Appender<a class="headerlink" href="#load-balancing-log4j-appender" title="Permalink to this headline">¶</a></h2>
 <p>Appends Log4j events to a list of flume agent&#8217;s avro source. A client using this
 appender must have the flume-ng-sdk in the classpath (eg,
-flume-ng-sdk-1.9.0.jar). This appender supports a round-robin and random
+flume-ng-sdk-1.10.0.jar). This appender supports a round-robin and random
 scheme for performing the load balancing. It also supports a configurable backoff
 timeout so that down agents are removed temporarily from the set of hosts
 Required properties are in <strong>bold</strong>.</p>
@@ -7648,109 +7678,39 @@ source code of the components.</p>
 </div>
 <div class="section" id="sinks-1">
 <h4>Sinks 1<a class="headerlink" href="#sinks-1" title="Permalink to this headline">¶</a></h4>
-<table border="1" class="docutils">
-<colgroup>
-<col width="30%" />
-<col width="16%" />
-<col width="15%" />
-<col width="19%" />
-<col width="9%" />
-<col width="10%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Avro/Thrift</td>
-<td>AsyncHBase</td>
-<td>ElasticSearch</td>
-<td>HBase</td>
-<td>HBase2</td>
-</tr>
-<tr class="row-even"><td>BatchCompleteCount</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr class="row-odd"><td>BatchEmptyCount</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr class="row-even"><td>BatchUnderflowCount</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr class="row-odd"><td>ChannelReadFail</td>
-<td>x</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>x</td>
-</tr>
-<tr class="row-even"><td>ConnectionClosedCount</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr class="row-odd"><td>ConnectionCreatedCount</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr class="row-even"><td>ConnectionFailedCount</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr class="row-odd"><td>EventDrainAttemptCount</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr class="row-even"><td>EventDrainSuccessCount</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr class="row-odd"><td>EventWriteFail</td>
-<td>x</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>x</td>
-</tr>
-<tr class="row-even"><td>KafkaEventSendTimer</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr class="row-odd"><td>RollbackCount</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-</tbody>
-</table>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/rgoers/projects/apache/flume/flume-site/source/sphinx/FlumeUserGuide.rst</tt>, line 5070)</p>
+<p>Malformed table.</p>
+<div class="highlight-none"><div class="highlight"><pre>+------------------------+-------------+------------+-------+--------+
+|                        | Avro/Thrift | AsyncHBase | HBase | HBase2 |
++------------------------+-------------+------------+-------+--------+-
+| BatchCompleteCount     | x           | x          | x     | x      |
++------------------------+-------------+------------+-------+--------+
+| BatchEmptyCount        | x           | x          | x     | x      |
++------------------------+-------------+------------+-------+--------+
+| BatchUnderflowCount    | x           | x          | x     | x      |
++------------------------+-------------+------------+-------+--------+
+| ChannelReadFail        | x           |            |       | x      |
++------------------------+-------------+------------+-------+--------+
+| ConnectionClosedCount  | x           | x          | x     | x      |
++------------------------+-------------+------------+-------+--------+
+| ConnectionCreatedCount | x           | x          | x     | x      |
++------------------------+-------------+------------+-------+--------+
+| ConnectionFailedCount  | x           | x          | x     | x      |
++------------------------+-------------+------------+-------+--------+
+| EventDrainAttemptCount | x           | x          | x     | x      |
++------------------------+-------------+------------+-------+--------+
+| EventDrainSuccessCount | x           | x          | x     | x      |
++------------------------+-------------+------------+-------+--------+
+| EventWriteFail         | x           |            |       | x      |
++------------------------+-------------+------------+-------+--------+
+| KafkaEventSendTimer    |             |            |       |        |
++------------------------+-------------+------------+-------+--------+
+| RollbackCount          |             |            |       |        |
++------------------------+-------------+------------+-------+--------+
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="sinks-2">
 <h4>Sinks 2<a class="headerlink" href="#sinks-2" title="Permalink to this headline">¶</a></h4>
@@ -8557,98 +8517,94 @@ can be leveraged to move the Flume agent to another host.</p>
 <td>org.apache.flume.sink.hbase.AsyncHBaseSink</td>
 </tr>
 <tr class="row-even"><td>org.apache.flume.Sink</td>
-<td>elasticsearch</td>
-<td>org.apache.flume.sink.elasticsearch.ElasticSearchSink</td>
-</tr>
-<tr class="row-odd"><td>org.apache.flume.Sink</td>
 <td>file_roll</td>
 <td>org.apache.flume.sink.RollingFileSink</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.Sink</td>
+<tr class="row-odd"><td>org.apache.flume.Sink</td>
 <td>irc</td>
 <td>org.apache.flume.sink.irc.IRCSink</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.Sink</td>
+<tr class="row-even"><td>org.apache.flume.Sink</td>
 <td>thrift</td>
 <td>org.apache.flume.sink.ThriftSink</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.Sink</td>
+<tr class="row-odd"><td>org.apache.flume.Sink</td>
 <td>&#8211;</td>
 <td>org.example.MySink</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.ChannelSelector</td>
+<tr class="row-even"><td>org.apache.flume.ChannelSelector</td>
 <td>replicating</td>
 <td>org.apache.flume.channel.ReplicatingChannelSelector</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.ChannelSelector</td>
+<tr class="row-odd"><td>org.apache.flume.ChannelSelector</td>
 <td>multiplexing</td>
 <td>org.apache.flume.channel.MultiplexingChannelSelector</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.ChannelSelector</td>
+<tr class="row-even"><td>org.apache.flume.ChannelSelector</td>
 <td>&#8211;</td>
 <td>org.example.MyChannelSelector</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.SinkProcessor</td>
+<tr class="row-odd"><td>org.apache.flume.SinkProcessor</td>
 <td>default</td>
 <td>org.apache.flume.sink.DefaultSinkProcessor</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.SinkProcessor</td>
+<tr class="row-even"><td>org.apache.flume.SinkProcessor</td>
 <td>failover</td>
 <td>org.apache.flume.sink.FailoverSinkProcessor</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.SinkProcessor</td>
+<tr class="row-odd"><td>org.apache.flume.SinkProcessor</td>
 <td>load_balance</td>
 <td>org.apache.flume.sink.LoadBalancingSinkProcessor</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.SinkProcessor</td>
+<tr class="row-even"><td>org.apache.flume.SinkProcessor</td>
 <td>&#8211;</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.interceptor.Interceptor</td>
+<tr class="row-odd"><td>org.apache.flume.interceptor.Interceptor</td>
 <td>timestamp</td>
 <td>org.apache.flume.interceptor.TimestampInterceptor$Builder</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.interceptor.Interceptor</td>
+<tr class="row-even"><td>org.apache.flume.interceptor.Interceptor</td>
 <td>host</td>
 <td>org.apache.flume.interceptor.HostInterceptor$Builder</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.interceptor.Interceptor</td>
+<tr class="row-odd"><td>org.apache.flume.interceptor.Interceptor</td>
 <td>static</td>
 <td>org.apache.flume.interceptor.StaticInterceptor$Builder</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.interceptor.Interceptor</td>
+<tr class="row-even"><td>org.apache.flume.interceptor.Interceptor</td>
 <td>regex_filter</td>
 <td>org.apache.flume.interceptor.RegexFilteringInterceptor$Builder</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.interceptor.Interceptor</td>
+<tr class="row-odd"><td>org.apache.flume.interceptor.Interceptor</td>
 <td>regex_extractor</td>
 <td>org.apache.flume.interceptor.RegexFilteringInterceptor$Builder</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.channel.file.encryption.KeyProvider$Builder</td>
+<tr class="row-even"><td>org.apache.flume.channel.file.encryption.KeyProvider$Builder</td>
 <td>jceksfile</td>
 <td>org.apache.flume.channel.file.encryption.JCEFileKeyProvider</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.channel.file.encryption.KeyProvider$Builder</td>
+<tr class="row-odd"><td>org.apache.flume.channel.file.encryption.KeyProvider$Builder</td>
 <td>&#8211;</td>
 <td>org.example.MyKeyProvider</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.channel.file.encryption.CipherProvider</td>
+<tr class="row-even"><td>org.apache.flume.channel.file.encryption.CipherProvider</td>
 <td>aesctrnopadding</td>
 <td>org.apache.flume.channel.file.encryption.AESCTRNoPaddingProvider</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.channel.file.encryption.CipherProvider</td>
+<tr class="row-odd"><td>org.apache.flume.channel.file.encryption.CipherProvider</td>
 <td>&#8211;</td>
 <td>org.example.MyCipherProvider</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.serialization.EventSerializer$Builder</td>
+<tr class="row-even"><td>org.apache.flume.serialization.EventSerializer$Builder</td>
 <td>text</td>
 <td>org.apache.flume.serialization.BodyTextEventSerializer$Builder</td>
 </tr>
-<tr class="row-even"><td>org.apache.flume.serialization.EventSerializer$Builder</td>
+<tr class="row-odd"><td>org.apache.flume.serialization.EventSerializer$Builder</td>
 <td>avro_event</td>
 <td>org.apache.flume.serialization.FlumeEventAvroEventSerializer$Builder</td>
 </tr>
-<tr class="row-odd"><td>org.apache.flume.serialization.EventSerializer$Builder</td>
+<tr class="row-even"><td>org.apache.flume.serialization.EventSerializer$Builder</td>
 <td>&#8211;</td>
 <td>org.example.MyEventSerializer$Builder</td>
 </tr>
@@ -8741,7 +8697,7 @@ can be leveraged to move the Flume agent to another host.</p>
 
 <h3><a href="index.html">This Page</a></h3>
 <ul>
-<li><a class="reference internal" href="#">Flume 1.9.0 User Guide</a><ul>
+<li><a class="reference internal" href="#">Flume 1.10.0 User Guide</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#system-requirements">System Requirements</a></li>
@@ -8760,7 +8716,10 @@ can be leveraged to move the Flume agent to another host.</p>
 <li><a class="reference internal" href="#wiring-the-pieces-together">Wiring the pieces together</a></li>
 <li><a class="reference internal" href="#starting-an-agent">Starting an agent</a></li>
 <li><a class="reference internal" href="#a-simple-example">A simple example</a></li>
-<li><a class="reference internal" href="#using-environment-variables-in-configuration-files">Using environment variables in configuration files</a></li>
+<li><a class="reference internal" href="#configuration-from-uris">Configuration from URIs</a></li>
+<li><a class="reference internal" href="#multiple-configuration-files">Multiple Configuration Files</a></li>
+<li><a class="reference internal" href="#using-environment-variables-system-properies-or-other-properties-configuration-files">Using environment variables, system properies, or other properties configuration files</a></li>
+<li><a class="reference internal" href="#using-a-command-options-file">Using a command options file</a></li>
 <li><a class="reference internal" href="#logging-raw-data">Logging raw data</a></li>
 <li><a class="reference internal" href="#zookeeper-based-configuration">Zookeeper based Configuration</a></li>
 <li><a class="reference internal" href="#installing-third-party-plugins">Installing third-party plugins</a><ul>
@@ -8850,7 +8809,6 @@ can be leveraged to move the Flume agent to another host.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#morphlinesolrsink">MorphlineSolrSink</a></li>
-<li><a class="reference internal" href="#elasticsearchsink">ElasticSearchSink</a></li>
 <li><a class="reference internal" href="#kite-dataset-sink">Kite Dataset Sink</a></li>
 <li><a class="reference internal" href="#kafka-sink">Kafka Sink</a></li>
 <li><a class="reference internal" href="#http-sink">HTTP Sink</a></li>
@@ -8869,6 +8827,7 @@ can be leveraged to move the Flume agent to another host.</p>
 </li>
 <li><a class="reference internal" href="#flume-channel-selectors">Flume Channel Selectors</a><ul>
 <li><a class="reference internal" href="#replicating-channel-selector-default">Replicating Channel Selector (default)</a></li>
+<li><a class="reference internal" href="#load-balancing-channel-selector">Load Balancing Channel Selector</a></li>
 <li><a class="reference internal" href="#multiplexing-channel-selector">Multiplexing Channel Selector</a></li>
 <li><a class="reference internal" href="#custom-channel-selector">Custom Channel Selector</a></li>
 </ul>
@@ -8977,7 +8936,7 @@ can be leveraged to move the Flume agent to another host.</p>
       <div class="clearer"></div>
     </div>
 <div class="footer">
-    &copy; Copyright 2009-2021 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
+    &copy; Copyright 2009-2022 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
 </div>
   </body>
 </html>

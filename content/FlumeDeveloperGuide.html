@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Flume 1.9.0 Developer Guide &mdash; Apache Flume</title>
+    <title>Flume 1.10.0 Developer Guide &mdash; Apache Flume</title>
     
     <link rel="stylesheet" href="_static/flume.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <link rel="top" title="Apache Flume" href="index.html" />
     <link rel="up" title="Documentation" href="documentation.html" />
     <link rel="next" title="Releases" href="releases/index.html" />
-    <link rel="prev" title="Flume 1.9.0 User Guide" href="FlumeUserGuide.html" /> 
+    <link rel="prev" title="Flume 1.10.0 User Guide" href="FlumeUserGuide.html" /> 
   </head>
   <body>
 <div class="header">
@@ -60,8 +60,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="flume-1-9-0-developer-guide">
-<h1>Flume 1.9.0 Developer Guide<a class="headerlink" href="#flume-1-9-0-developer-guide" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="flume-1-10-0-developer-guide">
+<h1>Flume 1.10.0 Developer Guide<a class="headerlink" href="#flume-1-10-0-developer-guide" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="overview">
@@ -893,6 +893,93 @@ mechanism that captures the new data and stores it into the <tt class="docutils 
 <h4>Channel<a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h4>
 <p>TBD</p>
 </div>
+<div class="section" id="initializable">
+<h4>Initializable<a class="headerlink" href="#initializable" title="Permalink to this headline">¶</a></h4>
+<p>As of Flume 1.10.0 Sources, Sinks, and Channels may implement the Intitializable interface. Doing so
+allows the component to have access the materialized configuration before any of the components have been
+started.</p>
+<p>This example shows a Sink being configured with the name of a Source. While initializing it will
+retrieve the Source from the configuration and save it. During event processing a new event will be
+sent to the Source, presumably after the event has be modified in some way.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NullInitSink</span> <span class="kd">extends</span> <span class="n">NullSink</span> <span class="kd">implements</span> <span class="n">Initializable</span> <span class="o">{</span>
+
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">NullInitSink</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">sourceName</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">EventProcessor</span> <span class="n">eventProcessor</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">long</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="nf">NullInitSink</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">sourceName</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;targetSource&quot;</span><span class="o">);</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">configure</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initialize</span><span class="o">(</span><span class="n">MaterializedConfiguration</span> <span class="n">configuration</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&quot;Locating source for event publishing&quot;</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">SourceRunner</span><span class="o">&gt;</span>  <span class="n">entry</span> <span class="o">:</span> <span class="n">configuration</span><span class="o">.</span><span class="na">getSourceRunners</span><span class="o">().</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">sourceName</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">Source</span> <span class="n">source</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">().</span><span class="na">getSource</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">source</span> <span class="k">instanceof</span> <span class="n">EventProcessor</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">eventProcessor</span> <span class="o">=</span> <span class="o">(</span><span class="n">EventProcessor</span><span class="o">)</span> <span class="n">source</span><span class="o">;</span>
+          <span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&quot;Found event processor {}&quot;</span><span class="o">,</span> <span class="n">source</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+          <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;No Source named {} found for republishing events.&quot;</span><span class="o">,</span> <span class="n">sourceName</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Status</span> <span class="nf">process</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">EventDeliveryException</span> <span class="o">{</span>
+    <span class="n">Status</span> <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="na">READY</span><span class="o">;</span>
+
+    <span class="n">Channel</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">getChannel</span><span class="o">();</span>
+    <span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">();</span>
+    <span class="n">Event</span> <span class="n">event</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="n">CounterGroup</span> <span class="n">counterGroup</span> <span class="o">=</span> <span class="n">getCounterGroup</span><span class="o">();</span>
+    <span class="kt">long</span> <span class="n">batchSize</span> <span class="o">=</span> <span class="n">getBatchSize</span><span class="o">();</span>
+    <span class="kt">long</span> <span class="n">eventCounter</span> <span class="o">=</span> <span class="n">counterGroup</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;events.success&quot;</span><span class="o">);</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="n">transaction</span><span class="o">.</span><span class="na">begin</span><span class="o">();</span>
+      <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">batchSize</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="na">take</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">event</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+          <span class="kt">long</span> <span class="n">id</span> <span class="o">=</span> <span class="n">Long</span><span class="o">.</span><span class="na">parseLong</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getBody</span><span class="o">()));</span>
+          <span class="n">total</span> <span class="o">+=</span> <span class="n">id</span><span class="o">;</span>
+          <span class="n">event</span><span class="o">.</span><span class="na">getHeaders</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;Total&quot;</span><span class="o">,</span> <span class="n">Long</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">total</span><span class="o">));</span>
+          <span class="n">eventProcessor</span><span class="o">.</span><span class="na">processEvent</span><span class="o">(</span><span class="n">event</span><span class="o">);</span>
+          <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&quot;Null sink {} successful processed event {}&quot;</span><span class="o">,</span> <span class="n">getName</span><span class="o">(),</span> <span class="n">id</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+          <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="na">BACKOFF</span><span class="o">;</span>
+          <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+      <span class="n">transaction</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+      <span class="n">counterGroup</span><span class="o">.</span><span class="na">addAndGet</span><span class="o">(</span><span class="s">&quot;events.success&quot;</span><span class="o">,</span> <span class="o">(</span><span class="kt">long</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">batchSize</span><span class="o">,</span> <span class="n">i</span><span class="o">));</span>
+      <span class="n">counterGroup</span><span class="o">.</span><span class="na">incrementAndGet</span><span class="o">(</span><span class="s">&quot;transaction.success&quot;</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">transaction</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+      <span class="n">counterGroup</span><span class="o">.</span><span class="na">incrementAndGet</span><span class="o">(</span><span class="s">&quot;transaction.failed&quot;</span><span class="o">);</span>
+      <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">&quot;Failed to deliver event. Exception follows.&quot;</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nf">EventDeliveryException</span><span class="o">(</span><span class="s">&quot;Failed to deliver event: &quot;</span> <span class="o">+</span> <span class="n">event</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+      <span class="n">transaction</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="k">return</span> <span class="n">status</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -937,7 +1024,7 @@ mechanism that captures the new data and stores it into the <tt class="docutils 
 
 <h3><a href="index.html">This Page</a></h3>
 <ul>
-<li><a class="reference internal" href="#">Flume 1.9.0 Developer Guide</a><ul>
+<li><a class="reference internal" href="#">Flume 1.10.0 Developer Guide</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#architecture">Architecture</a><ul>
@@ -966,6 +1053,7 @@ mechanism that captures the new data and stores it into the <tt class="docutils 
 <li><a class="reference internal" href="#sink">Sink</a></li>
 <li><a class="reference internal" href="#source">Source</a></li>
 <li><a class="reference internal" href="#channel">Channel</a></li>
+<li><a class="reference internal" href="#initializable">Initializable</a></li>
 </ul>
 </li>
 </ul>
@@ -979,7 +1067,7 @@ mechanism that captures the new data and stores it into the <tt class="docutils 
       <div class="clearer"></div>
     </div>
 <div class="footer">
-    &copy; Copyright 2009-2021 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
+    &copy; Copyright 2009-2022 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
 </div>
   </body>
 </html>
