@@ -221,12 +221,11 @@ that buffers event data in memory, and a sink that logs event data to the consol
 various components, then describes their types and configuration parameters. A given configuration file might define
 several named agents; when a given Flume process is launched a flag is passed telling it which named agent to manifest.</p>
 <p>Given this configuration file, we can start Flume as follows:</p>
-<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --name a1 -Dflume.root.logger=INFO,console
+<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --name a1
 </pre></div>
 </div>
 <p>Note that in a full deployment we would typically include one more option: <tt class="docutils literal"><span class="pre">--conf=&lt;conf-dir&gt;</span></tt>.
-The <tt class="docutils literal"><span class="pre">&lt;conf-dir&gt;</span></tt> directory would include a shell script <em>flume-env.sh</em> and potentially a log4j properties file.
-In this example, we pass a Java option to force Flume to log to the console and we go without a custom environment script.</p>
+The <tt class="docutils literal"><span class="pre">&lt;conf-dir&gt;</span></tt> directory would include a shell script <em>flume-env.sh</em> and potentially a log4j configuration file.</p>
 <p>From a separate terminal, we can then telnet port 44444 and send Flume an event:</p>
 <div class="highlight-properties"><pre>$ telnet localhost 44444
 Trying 127.0.0.1...
@@ -265,7 +264,7 @@ be configured using its own &#8211;conf-file or &#8211;conf-uri option. However,
 with &#8211;conf-file or with &#8211;conf-uri. If &#8211;conf-file and &#8211;conf-uri appear together as options all &#8211;conf-uri
 configurations will be processed before any of the &#8211;conf-file configurations are merged.</p>
 <p>For example, a configuration of:</p>
-<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --conf-uri http://localhost:80/flume.conf --conf-uri http://localhost:80/override.conf --name a1 -Dflume.root.logger=INFO,console
+<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --conf-uri http://localhost:80/flume.conf --conf-uri http://localhost:80/override.conf --name a1
 </pre></div>
 </div>
 <p>will cause flume.conf to be read first, override.conf to be merged with it and finally example.conf would be
@@ -294,7 +293,7 @@ class using the default set of Lookups along with a lookup that uses the configu
 source for replacement values.</p>
 <dl class="docutils">
 <dt>For example::</dt>
-<dd>$ NC_PORT=44444 bin/flume-ng agent &#8211;conf conf &#8211;conf-file example.conf &#8211;name a1 -Dflume.root.logger=INFO,console</dd>
+<dd>$ NC_PORT=44444 bin/flume-ng agent &#8211;conf conf &#8211;conf-file example.conf &#8211;name a1</dd>
 </dl>
 <p>Note the above is just an example, environment variables can be configured in other ways, including being set in <cite>conf/flume-env.sh</cite>.</p>
 <p>As noted, system properties are also supported, so the configuration:</p>
@@ -306,7 +305,7 @@ a1.sources.r1.channels = c1
 </pre></div>
 </div>
 <p>could be used and the startup command could be:</p>
-<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --name a1 -Dflume.root.logger=INFO,console -DNC_PORT=44444
+<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --name a1 -DNC_PORT=44444
 </pre></div>
 </div>
 <p>Furthermore, because multiple configuration files are allowed the first file could contain:</p>
@@ -322,7 +321,7 @@ a1.sources.r1.channels = c1
 </pre></div>
 </div>
 <p>In this case the startup command could be:</p>
-<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --conf-file override.conf --name a1 -Dflume.root.logger=INFO,console
+<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --conf-file override.conf --name a1
 </pre></div>
 </div>
 <p>Note that the method for specifying environment variables as was done in prior versions will stil work
@@ -357,9 +356,8 @@ setting this in the <tt class="docutils literal"><span class="pre">JAVA_OPTS</sp
 <p>To enable data logging, set the Java system property <tt class="docutils literal"><span class="pre">-Dorg.apache.flume.log.rawdata=true</span></tt>
 in the same way described above. For most components, the log4j logging level must also be set to
 DEBUG or TRACE to make event-specific logging appear in the Flume logs.</p>
-<p>Here is an example of enabling both configuration logging and raw data logging while also
-setting the Log4j loglevel to DEBUG for console output:</p>
-<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --name a1 -Dflume.root.logger=DEBUG,console -Dorg.apache.flume.log.printconfig=true -Dorg.apache.flume.log.rawdata=true
+<p>Here is an example of enabling both configuration logging and raw data logging:</p>
+<div class="highlight-none"><div class="highlight"><pre>$ bin/flume-ng agent --conf conf --conf-file example.conf --name a1 -Dorg.apache.flume.log.printconfig=true -Dorg.apache.flume.log.rawdata=true
 </pre></div>
 </div>
 </div>
@@ -374,7 +372,7 @@ Following is how the Zookeeper Node tree would look like for agents a1 and a2</p
 </div>
 <p>Once the configuration file is uploaded, start the agent with following options</p>
 <blockquote>
-<div>$ bin/flume-ng agent &#8211;conf conf -z zkhost:2181,zkhost1:2181 -p /flume &#8211;name a1 -Dflume.root.logger=INFO,console</div></blockquote>
+<div>$ bin/flume-ng agent &#8211;conf conf -z zkhost:2181,zkhost1:2181 -p /flume &#8211;name a1</div></blockquote>
 <table border="1" class="docutils">
 <colgroup>
 <col width="17%" />
@@ -7679,7 +7677,7 @@ source code of the components.</p>
 <div class="section" id="sinks-1">
 <h4>Sinks 1<a class="headerlink" href="#sinks-1" title="Permalink to this headline">¶</a></h4>
 <div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/rgoers/projects/apache/flume/flume-site/source/sphinx/FlumeUserGuide.rst</tt>, line 5070)</p>
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/rgoers/projects/apache/flume/flume-site/source/sphinx/FlumeUserGuide.rst</tt>, line 5068)</p>
 <p>Malformed table.</p>
 <div class="highlight-none"><div class="highlight"><pre>+------------------------+-------------+------------+-------+--------+
 |                        | Avro/Thrift | AsyncHBase | HBase | HBase2 |
@@ -8666,6 +8664,7 @@ can be leveraged to move the Flume agent to another host.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getinvolved.html">How to Get Involved</a></li>
 <li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Apache Flume Security Vulnerabilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases/index.html">Releases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mailinglists.html">Mailing lists</a></li>
