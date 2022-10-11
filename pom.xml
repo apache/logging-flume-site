@@ -205,7 +205,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${basedir}/output</outputDirectory>
+              <outputDirectory>${basedir}/content</outputDirectory>
               <resources>
                 <resource>
                   <directory>${project.build.directory}/site</directory>
