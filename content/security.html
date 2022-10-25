@@ -65,6 +65,38 @@
 <p>Binary patches are never provided. If you need to apply a source code patch, use the building instructions for the Apache Flume version that you are using.</p>
 <p>If you need help on building or configuring Flume or other help on following the instructions to mitigate the known vulnerabilities listed here, please subscribe to, and send your questions to the public Flume Users mailing list.</p>
 <p>If you have encountered an unlisted security vulnerability or other unexpected behaviour that has security impact, or if the descriptions here are incomplete, please report them privately to the <a class="reference external" href="mailto:private&#37;&#52;&#48;flume&#46;apche&#46;org">Flume SecurityTeam</a>. Thank you!</p>
+<p class="rubric">Fixed in Flume 1.11.0</p>
+<p><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-42468">CVE-2022-42468</a>: Apache Flume Improper Input Validation (JNDI Injection) in JMSSource.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="53%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-42468">CVE-2022-42468</a></th>
+<th class="head">Deserialization of Untrusted Data</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Severity</td>
+<td>Moderate</td>
+</tr>
+<tr class="row-odd"><td>Base CVSS SCore</td>
+<td>6.6 (AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H)</td>
+</tr>
+<tr class="row-even"><td>Versions Affected</td>
+<td>Flume 1.4.0 through 1.10.1</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Description</p>
+<p>Apache Flume versions 1.4.0 through 1.10.1 are vulnerable to a remote code execution (RCE) attack when a configuration uses a JMS Source with an unsafe providerURL. This issue is fixed by limiting JNDI to allow only the use of the java protocol or no protocol.</p>
+<p class="rubric">Mitigation</p>
+<p>Do not use JMSSource or upgrade to Apache Flume 1.11.0</p>
+<p class="rubric">Release Details</p>
+<p>In release 1.11.0, if a protocol is specified in the providerUrl parameter only the java protocol will be allowed. If no protocol is specified it will also be allowed.</p>
+<p class="rubric">Credit</p>
+<p>This issue was found by Xian Wei.</p>
 <p class="rubric">Fixed in Flume 1.10.1</p>
 <p><a class="reference external" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-34916">CVE-2022-34916</a>: Apache Flume vulnerable to a JNDI RCE in JMSMessageConsumer.</p>
 <table border="1" class="docutils">
