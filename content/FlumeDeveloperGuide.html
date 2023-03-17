@@ -145,9 +145,6 @@ commands:</p>
 <li>Create tarball package: <tt class="docutils literal"><span class="pre">mvn</span> <span class="pre">clean</span> <span class="pre">install</span></tt></li>
 <li>Create tarball package (skip unit tests): <tt class="docutils literal"><span class="pre">mvn</span> <span class="pre">clean</span> <span class="pre">install</span> <span class="pre">-DskipTests</span></tt></li>
 </ol>
-<p>Please note that Flume builds requires that the Google Protocol Buffers compiler
-be in the path. You can download and install it by following the instructions
-<a class="reference external" href="https://developers.google.com/protocol-buffers/">here</a>.</p>
 </div>
 <div class="section" id="updating-protocol-buffer-version">
 <h4>Updating Protocol Buffer Version<a class="headerlink" href="#updating-protocol-buffer-version" title="Permalink to this headline">¶</a></h4>
@@ -155,9 +152,7 @@ be in the path. You can download and install it by following the instructions
 used by Flume, it is necessary to regenerate the data access classes using the protoc compiler
 that is part of Protocol Buffer as follows.</p>
 <ol class="arabic simple">
-<li>Install the desired version of Protocol Buffer on your local machine</li>
 <li>Update version of Protocol Buffer in pom.xml</li>
-<li>Generate new Protocol Buffer data access classes in Flume: <tt class="docutils literal"><span class="pre">cd</span> <span class="pre">flume-ng-channels/flume-file-channel;</span> <span class="pre">mvn</span> <span class="pre">-P</span> <span class="pre">compile-proto</span> <span class="pre">clean</span> <span class="pre">package</span> <span class="pre">-DskipTests</span></tt></li>
 <li>Add Apache license header to any of the generated files that are missing it</li>
 <li>Rebuild and test Flume:  <tt class="docutils literal"><span class="pre">cd</span> <span class="pre">../..;</span> <span class="pre">mvn</span> <span class="pre">clean</span> <span class="pre">install</span></tt></li>
 </ol>
