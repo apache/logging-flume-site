@@ -516,7 +516,9 @@ channel3. The mapping can be set in the agent&#8217;s configuration file.</p>
 </div>
 <div class="section" id="spring-boot-setup">
 <h2>Spring Boot Setup<a class="headerlink" href="#spring-boot-setup" title="Permalink to this headline">¶</a></h2>
-<p>As of version 1.11.0 Flume supports being packaged as a Spring Boot application.</p>
+<p>Apache Flume provides the flume-spring-boot module to provide support for packaging and
+configuring an application using Spring Boot. Version 2.0.0 or greater of flume-spring-boot
+should be used.</p>
 <p>Flume &#8220;normally&#8221; follows a paradigm where each component implements the Configurable
 interface and must implement the configure method to configure itself by retrieving
 the configuration attributes from its Context&#8217;s properties. In contrast,
@@ -550,31 +552,31 @@ Boot should configure the Spring Boot Maven plugin with that as the main class a
 <h3>Component Scanning<a class="headerlink" href="#component-scanning" title="Permalink to this headline">¶</a></h3>
 <p>Spring Boot will automatically locate all the Spring components provided by Flume.
 However, in order for the Flume application to be configured Spring needs the
-base Java package name used by the application in order for Spring to locate
-these components.This is accomplished in the application by creating a class
-that implements <cite>org.apache.flume.spring.boot.config.PackageProvider</cite> that is
-registered as a Java service. For example:</p>
-<div class="highlight-none"><div class="highlight"><pre>public class WylieCouotePackageProvider implements PackageProvider {
-  private static final String[] PACKAGES = {&quot;org.acme.coyote.wylie&quot;};
+configuration and package names used by the application in order for Spring to locate
+these components.This is accomplished in the application by providing a META-INF/spring.factories
+file that enables auto configuration for one class that will then provide the component
+scanning information for the rest of the application. For example:</p>
+<p>META-INF/spring.factories:</p>
+<div class="highlight-none"><div class="highlight"><pre>org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.sample.myapp.config.AppConfig
+</pre></div>
+</div>
+<p>com.sample.config.AppConfig.java:</p>
+<div class="highlight-none"><div class="highlight"><pre>package com.sample.myapp.config;
 
-  @Override
-  public List&lt;String&gt; getPackages() {
-    return Arrays.asList(PACKAGES);
-  }
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackages=&quot;com.sample.myapp&quot;)
+public class MyConfiguration {
+
 }
 </pre></div>
 </div>
-<p>would then be registered in a file with a fully qualified name of
-<cite>src/main/resources/META-INF/services/org.apache.flume.spring.boot.config.PackageProvider</cite>
-which would contain:</p>
-<div class="highlight-none"><div class="highlight"><pre>org.acme.coyote.wylie.config.WylieCoyotePackageProvider
-</pre></div>
-</div>
-<p>This would result in all classes in the <cite>org.acme.coyote.wylie</cite> package and
+<p>This will result in all classes in the <cite>com.sample.myapp</cite> package and
 it`s sub-packages being scanned by Spring for components to be included. Note
 that classes found there may also use Spring&#8217;s <cite>&#64;Import</cite> annotation to include
-classes in other packages. In addition, since the getPackages method returns
-a List more than one package can be specified.</p>
+classes in other packages.</p>
 </div>
 <div class="section" id="component-wiring">
 <h3>Component Wiring<a class="headerlink" href="#component-wiring" title="Permalink to this headline">¶</a></h3>
@@ -588,6 +590,7 @@ creates these Flume components. An example configuration that generates
 sequence numbers, writes them to a MemoryChannel and then consumes these events
 without publishing them anywhere would look like:</p>
 <div class="highlight-none"><div class="highlight"><pre>@Configuration
+@ComponentScan(basePackages=&quot;com.sample.myapp&quot;)
 public class AppConfig extends AbstractFlumeConfiguration {
 
   @Bean
@@ -7942,7 +7945,7 @@ source code of the components.</p>
 <div class="section" id="sinks-1">
 <h4>Sinks 1<a class="headerlink" href="#sinks-1" title="Permalink to this headline">¶</a></h4>
 <div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/rgoers/projects/apache/flume/flume-site/source/sphinx/FlumeUserGuide.rst</tt>, line 5327)</p>
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/rgoers/projects/apache/flume/flume-site/source/sphinx/FlumeUserGuide.rst</tt>, line 5331)</p>
 <p>Malformed table.</p>
 <div class="highlight-none"><div class="highlight"><pre>+------------------------+-------------+------------+-------+--------+
 |                        | Avro/Thrift | AsyncHBase | HBase | HBase2 |
@@ -9207,7 +9210,7 @@ can be leveraged to move the Flume agent to another host.</p>
       <div class="clearer"></div>
     </div>
 <div class="footer">
-    &copy; Copyright 2009-2022 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
+    &copy; Copyright 2009-2023 The Apache Software Foundation. Apache Flume, Flume, Apache, the Apache feather logo, and the Apache Flume project logo are trademarks of The Apache Software Foundation..
 </div>
   </body>
 </html>
