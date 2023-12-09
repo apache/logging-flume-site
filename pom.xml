@@ -132,7 +132,7 @@
   <properties>
     <site.deploy.url>scp://people.apache.org/www/maven.apache.org/</site.deploy.url>
     <site.output>${project.build.directory}/site</site.output>
-    <sphinx.plugin.version>1.0.2</sphinx.plugin.version>
+    <sphinx.plugin.version>1.0.3</sphinx.plugin.version>
   </properties>
 
   <pluginRepositories>
