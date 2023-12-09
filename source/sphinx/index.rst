@@ -61,6 +61,26 @@ please visit our `Get Involved <getinvolved.html>`__ page.
 
 .. raw:: html
 
+   <h3>Nov 17, 2023 - Apache Flume merges with Apache Logging Services</h3>
+
+We are pleased to announce that Apache Flume has now joined the Logging Services group. 
+Known for its efficient handling of large volumes of log data, Flume's distributed, 
+reliable service complements our existing logging solutions.
+
+The development of Flume has been a journey of steady progress and commitment. 
+Despite facing challenges in expanding their team, Flume's work gained recognition 
+among Logging Services contributors. This recognition paved the way for a 
+collaborative opportunity. By joining forces, we aim to leverage our combined 
+expertise to further enhance our logging solutions, benefiting both the Flume 
+community and our users.
+
+Additionally, this year marks the 20th anniversary of Logging Services, 
+underscoring our long-standing stability and commitment to the community. 
+We believe that this milestone makes Logging Services a particularly stable 
+and supportive home for the Flume community as we move forward together.
+
+.. raw:: html
+
    <h3>Aug 16, 2022 - Apache Flume 1.10.1 Released</h3>
 
 The Apache Flume team is pleased to announce the release of Flume 1.10.1.
