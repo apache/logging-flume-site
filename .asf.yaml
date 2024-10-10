@@ -5,9 +5,11 @@ notifications:
   jira_options: link label comment 
 
 staging:
+  hostname: flume.apache.org
   profile: ~
   whoami: asf-staging
 
 publish:
+  hostname: flume.apache.org
   profile: ~
   whoami: asf-site
