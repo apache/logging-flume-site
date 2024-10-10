@@ -244,4 +244,5 @@ _ = Documentation.gettext;
 
 $(document).ready(function() {
   Documentation.init();
+  $("div.header").before("<div id='dormant-banner'><b>This project is not maintained anymore!</b> <a href='https://lists.apache.org/thread/dg9wro6dp7w95o1x911lbyqxzl808b3l'>It has been marked as dormant by Apache Logging Services consensus on 2024-10-10.</a> Users are advised to migrate to alternatives. For other inquiries, see <a href='https://logging.apache.org/support.html'>the support policy</a>.</div>");
 });

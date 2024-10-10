@@ -9,6 +9,17 @@
  *
  */
 
+ div#dormant-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff000;
+    width: 100%;
+    padding: 1em;
+    border-bottom: 1px solid #000;
+    text-align: center;
+}
+
 /* -- main layout ----------------------------------------------------------- */
 
 div.clearer {
