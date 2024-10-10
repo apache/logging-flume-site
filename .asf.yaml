@@ -1,15 +1,15 @@
 notifications:
-  commits:      commits@flume.apache.org
-  issues:       issues@flume.apache.org
-  pullrequests: dev@flume.apache.org
-  jira_options: link label comment 
+  commits:      commits@logging.apache.org
+  issues:       notifications@logging.apache.org
+  pullrequests: notifications@logging.apache.org
+  jira_options: link label worklog
 
 staging:
-  hostname: flume.apache.org
   profile: ~
-  whoami: asf-staging
+  whoami: main-site-stg-out
+  subdir: content/flume
 
 publish:
-  hostname: flume.apache.org
   profile: ~
-  whoami: asf-site
+  whoami: main-site-pro-out
+  subdir: content/flume
