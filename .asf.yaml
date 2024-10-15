@@ -5,9 +5,9 @@ notifications:
   jira_options: link label worklog
 
 staging:
-  hostname: flume.apache.org
   profile: ~
   whoami: main-site-stg-out
+  subdir: content/flume
 
 publish:
   hostname: flume.apache.org
