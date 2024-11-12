@@ -10,6 +10,6 @@ staging:
   subdir: content/flume
 
 publish:
+  hostname: flume.apache.org
   profile: ~
-  whoami: main-site-pro-out
-  subdir: content/flume
+  whoami: asf-site
