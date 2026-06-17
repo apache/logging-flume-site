@@ -40,4 +40,4 @@ ui:
     snapshot: true
 
 output:
-  dir: ./build/site
+  dir: ./target/site

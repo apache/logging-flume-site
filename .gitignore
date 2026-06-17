@@ -1,9 +1,8 @@
 # Antora / Node build artifacts
 /node_modules/
-/build/
 package-lock.json
 
-# Legacy Maven/Sphinx build output
+# Build output (Antora site + Maven/Sphinx)
 /target/
 
 # OS / IDE cruft
