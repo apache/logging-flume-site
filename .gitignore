@@ -1,0 +1,10 @@
+# Antora / Node build artifacts
+/node_modules/
+package-lock.json
+
+# Build output (Antora site + Maven/Sphinx)
+/target/
+
+# OS / IDE cruft
+.DS_Store
+.idea/
