@@ -10,6 +10,5 @@ staging:
   subdir: content/flume
 
 publish:
-  profile: ~
   whoami: main-site-pro-out
   subdir: content/flume
